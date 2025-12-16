@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AGSStore</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+:root{
+  --bg:#091218;
+  --bg-soft:#033455;
+  --card:#1a1a22;
+  --primary:#7c4dff;
+  --secondary:#00e5ff;
+  --text:#f8a50a;
+  --danger:#ff3d3d;
+}
+
+		*{
+		box-sizing:border-box;
+		font-family:'Poppins', sans-serif;
+		}
+
+html, body{
+  height:100%;
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  display:flex;
+  flex-direction:column;
+}
+
+.card img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  border-radius:8px;
+}
+
+    header{padding:20px;display:flex;align-items:center;justify-content:space-between;background:#0b0b0f}
+    header img{height:100px;width:330px}
+    nav a{color:var(--text);margin-left:5px;text-decoration:none;font-weight:bold}
+    
+	.container{
+  padding:30px;
+  flex:1;}
+  
+  .grid{
+  display:grid;
+  grid-template-columns:repeat(5, 1fr);
+  gap:20px
+}
+
+/* Responsivo */
+@media (max-width:1200px){
+  .grid{grid-template-columns:repeat(3,1fr)}
+}
+@media (max-width:768px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:480px){
+  .grid{grid-template-columns:1fr}
+}
+
+    .card{
+	box-shadow:2px 0px 5px rgba(0,0,0,.4);
+	}
+    .card img{width:100%;border-radius:5px}
+    .btn{display:inline-block;margin-top:12px;padding:20px 20px;border-radius:9px;background:linear-gradient(45deg,var(--primary),var(--secondary));color:#000;font-weight:bold;text-decoration:none;border:none;cursor:pointer}
+    .price{color:var(--secondary);font-size:20px;font-weight:bold}
+	
+    .stars span{color:gold;font-size:18px;cursor:pointer}
+    .hidden{display:none}
+    input,textarea,select{width:100%;padding:8px;margin:6px 0;border-radius:6px;border:none}
+	.fileBtn{
+  display:inline-block;
+  padding:10px;
+  background:#222;
+  border:1px dashed var(--secondary);
+  border-radius:8px;
+  cursor:pointer;
+  margin:8px 0;
+}
+.fileBtn input{display:none}
+
+input, textarea{
+  max-width:400px;
+}
+textarea{
+  height:80px;
+}
+
+.sectionTitle{
+  display:inline-block;
+  padding:10px 20px;
+  background:linear-gradient(45deg,var(--primary),var(--secondary));
+  color:#000;
+  border-radius:10px;
+  margin-bottom:20px;
+}
+
+#admin input,
+#admin textarea,
+#admin select{
+  width:100%;
+  max-width:350px;
+  margin-bottom:10px;
+}
+
+#adminPanel{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+#adminPanel input,
+#adminPanel textarea,
+#adminPanel select{
+  width:100%;
+  max-width:400px;
+}
+
+
+#admin{
+  background:var(--bg-soft);
+  border:2px solid var(--primary);
+  border-radius:16px;
+  padding:30px;
+  max-width:900px;
+  margin:40px auto;
+  box-shadow:0 0 30px rgba(124,77,255,.2);
+}
+.adminTitle{
+  background:linear-gradient(45deg,#ff9800,#ff5722);
+  color:#000;
+  padding:12px 20px;
+  border-radius:12px;
+  display:inline-block;
+  margin-bottom:20px;
+}
+#admin .card{
+  background:#111;
+  border:1px solid #333;
+}
+	footer{
+  margin-top:auto;
+  padding:20px;
+  text-align:center;
+  background:#000;
+  border-top:1px solid #222;
+  font-size:14px;
+}
+
+.iptvPlans{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:20px;
+  margin-top:30px;
+}
+
+.iptvBtn{
+  background:linear-gradient(45deg,#00e5ff,#7c4dff);
+  color:#000;
+  border-radius:16px;
+  padding:20px;
+  text-align:center;
+  font-weight:bold;
+  cursor:pointer;
+  transition:.3s;
+  box-shadow:0 10px 20px rgba(0,0,0,.4);
+}
+
+.iptvBtn:hover{
+  transform:scale(1.05);
+}
+
+.iptvBtn span{
+  display:block;
+  font-size:26px;
+  margin-bottom:10px;
+}
+
+.iptvBtn small{
+  display:block;
+  margin-top:8px;
+  font-size:14px;
+}
+
+/* ===============================
+   LOJA – CARDS COM BORDA NEON
+================================ */
+
+/* SOMENTE NA LOJA */
+#home .grid .card{
+  background:linear-gradient(180deg,#0b0f14,#05070b);
+  border-radius:18px;
+  padding:14px;
+  position:relative;
+  transition:.35s ease;
+  overflow:hidden;
+}
+
+/* BORDA NEON */
+#home .grid .card::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:20px;
+  background:linear-gradient(
+    45deg,
+    #7c4dff,
+    #00e5ff,
+    #ff9800,
+    #7c4dff
+  );
+  opacity:.35;
+  z-index:-1;
+  filter:blur(10px);
+  transition:.35s;
+}
+
+/* HOVER */
+#home .grid .card:hover{
+  transform:translateY(-10px) scale(1.04);
+}
+
+#home .grid .card:hover::before{
+  opacity:1;
+  filter:blur(16px);
+}
+
+/* CLICK (MOBILE) */
+#home .grid .card:active{
+  transform:scale(0.97);
+}
+
+/* IMAGEM */
+#home .grid .card img{
+  height:190px;
+  object-fit:cover;
+  border-radius:14px;
+}
+
+/* BOTÃO */
+#home .grid .card .btn{
+  width:100%;
+  text-align:center;
+}
+
+/* ANIMAÇÃO NEON */
+@keyframes neonPulse{
+  0%{filter:blur(8px)}
+  50%{filter:blur(16px)}
+  100%{filter:blur(8px)}
+}
+
+#home .grid .card::before{
+  animation:neonPulse 3s infinite;
+}
+
+
+/* ===============================
+   ADMIN – GRID ORGANIZADO
+================================ */
+
+#adminProducts{
+  display:grid;
+  grid-template-columns:repeat(5, 1fr); /* 5 por linha */
+  gap:20px;
+  margin-top:20px;
+}
+
+/* RESPONSIVO */
+@media (max-width:1400px){
+  #adminProducts{
+    grid-template-columns:repeat(4, 1fr);
+  }
+}
+
+@media (max-width:1100px){
+  #adminProducts{
+    grid-template-columns:repeat(3, 1fr);
+  }
+}
+
+@media (max-width:768px){
+  #adminProducts{
+    grid-template-columns:repeat(2, 1fr);
+  }
+}
+
+@media (max-width:480px){
+  #adminProducts{
+    grid-template-columns:1fr;
+  }
+}
+
+
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="agsstore.png" alt="AGSStore">
+   <nav>
+  <a href="#" onclick="showPage('home')">
+    <span class="sectionTitle">Loja</span>
+  </a>
+
+  <a href="#" onclick="showPage('agsiptv')">
+    <span class="sectionTitle">AGS IPTV</span>
+  </a>
+
+  <a href="#" onclick="showPage('cart')">
+    🛒 Carrinho (<span id="cartCount">0</span>)
+  </a>
+</nav>
+
+</header>
+
+<div class="container">
+
+  <!-- HOME -->
+  <section id="home">
+  
+		<input 
+  type="text" 
+  id="searchInput" 
+  placeholder="🔍 Buscar produto..."
+  style="
+    max-width:400px;
+    padding:12px;
+    border-radius:10px;
+    border:none;
+    margin-bottom:20px;
+    font-size:16px;
+  "
+  oninput="render()"
+/>
+
+    <h2>Destaques</h2>
+    <div class="grid" id="productList"></div>
+	
+	 <!-- NOVA ÁREA: TODOS OS PRODUTOS -->
+  <h2 style="margin-top:40px">Todos os Produtos</h2>
+  <div class="grid" id="allProducts"></div>
+  </section>
+  
+  <!-- PRODUTO -->
+  <section id="product" class="hidden">
+    <button class="btn" onclick="showPage('home')">Voltar</button>
+    <div id="productDetail"></div>
+  </section>
+
+<section id="cart" class="hidden">
+  <h2>Carrinho</h2>
+  <div id="cartItems"></div>
+  <p id="cartTotal" style="margin-top:15px;font-weight:bold"></p>
+  <button class="btn" onclick="checkout()">Finalizar Compra</button>
+</section>
+
+
+
+  <!-- AGS IPTV -->
+ <section id="agsiptv" class="hidden">  
+	<div id="iptvBanners" class="grid"></div>
+
+
+  <h2 class="sectionTitle">Planos AGS IPTV</h2>
+
+  <div class="iptvPlans">
+
+    <div class="iptvBtn" onclick="iptvPlan('R$20,00 - 1 usuário / 1 tela')">
+      <span>📺</span>
+      R$ 20,00
+      <small>1 usuário<br>1 tela simultânea</small>
+    </div>
+
+    <div class="iptvBtn" onclick="iptvPlan('R$30,00 - 1 usuário / 3 telas')">
+      <span>📺📺📺</span>
+      R$ 30,00
+      <small>1 usuário<br>3 telas simultâneas</small>
+    </div>
+
+    <div class="iptvBtn" onclick="iptvPlan('R$35,00 - 2 usuários / 1 tela cada')">
+      <span>👥</span>
+      R$ 35,00
+      <small>2 usuários<br>1 tela cada</small>
+    </div>
+
+    <div class="iptvBtn" onclick="iptvPlan('R$30,00 - UNITV')">
+      <span>🔥</span>
+      R$ 30,00
+      <small>Plano UNITV</small>
+    </div>
+
+  </div>
+</section>
+   
+  <!-- ADMIN -->
+	<section id="admin" class="hidden">
+	<div id="adminPanel">
+
+
+    <h2 class="adminTitle">🔐 Painel Administrativo</h2>
+
+    <input id="title" placeholder="Título">
+    <input id="price" placeholder="Preço">
+    <textarea id="desc" placeholder="Descrição"></textarea>
+	
+			<label>Avaliação Inicial</label>
+<select id="ratingInput">
+  <option value="1">⭐</option>
+  <option value="2">⭐⭐</option>
+  <option value="3">⭐⭐⭐</option>
+  <option value="4">⭐⭐⭐⭐</option>
+  <option value="5" selected>⭐⭐⭐⭐⭐</option>
+</select>
+	
+    <label class="fileBtn">📷 Escolher Imagens (até 3) <input type="file" id="images" accept="image/png,image/jpeg" multiple></label>
+    <label class="fileBtn">🎥 Escolher Vídeo<input type="file" id="video" accept="video/*"></label>
+    <button class="btn" onclick="addProduct()">Cadastrar Produto</button>
+	<hr style="margin:30px 0">
+
+<h3>Produtos Cadastrados</h3>
+		<div id="adminProducts" class="grid"></div>
+		<hr style="margin:40px 0">
+
+<h3>Banners AGS IPTV</h3>
+
+<label class="fileBtn">
+  🖼️ Adicionar Banner IPTV
+  <input type="file" id="iptvBannerInput" accept="image/png,image/jpeg">
+</label>
+
+<button class="btn" onclick="addIptvBanner()">Adicionar Banner</button>
+
+<div id="iptvBannerAdmin" class="grid"></div>
+
+
+</div>
+  </section>
+
+
+<footer>
+  <p>WhatsApp: 85 9 8885-5751</p>
+  <p>Instagram: @a.g.s_store</p>
+</footer>
+
+<script>
+// ======= STORAGE =======
+let products = JSON.parse(localStorage.getItem('products') || '[]');
+let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+let iptvBanners = JSON.parse(localStorage.getItem('iptvBanners') || '[]');
+
+// ======= ADMIN =======
+let editingIndex = null;
+
+// ======= ELEMENTOS =======
+const adminPanel = document.getElementById('adminPanel');
+
+
+function showPage(id){
+  document.querySelectorAll('section').forEach(s =>
+    s.classList.add('hidden')
+  );
+
+  document.getElementById(id).classList.remove('hidden');
+
+  if(id === 'admin'){
+    renderAdmin(); // 🔥 ESSENCIAL
+  }else{
+    render();
+  }
+}
+
+
+
+function addProduct(){
+  const files = images.files;
+  const videoFile = video.files[0];
+
+  // 👉 SÓ EXIGE IMAGEM SE FOR NOVO PRODUTO
+  if(editingIndex === null && files.length === 0){
+    alert('Adicione pelo menos uma imagem');
+    return;
+  }
+
+  if(files.length > 3){
+    alert('Máximo de 3 imagens');
+    return;
+  }
+
+  let imgs = [];
+  let videoData = null;
+  let total = files.length + (videoFile ? 1 : 0);
+  let loaded = 0;
+
+  const finish = () => {
+    loaded++;
+    if(loaded < total) return;
+
+    const productData = {
+      id: editingIndex !== null ? products[editingIndex].id : Date.now(),
+      title: title.value,
+      price: price.value,
+      desc: desc.value,
+      rating: ratingInput.value,
+      imgs: imgs.length ? imgs : (editingIndex !== null ? products[editingIndex].imgs : []),
+      video: videoData || (editingIndex !== null ? products[editingIndex].video : null)
+    };
+
+    if(editingIndex !== null){
+      products[editingIndex] = productData;
+      editingIndex = null;
+    }else{
+      products.push(productData);
+    }
+
+    localStorage.setItem('products', JSON.stringify(products));
+
+    // LIMPA CAMPOS
+    title.value = '';
+    price.value = '';
+    desc.value = '';
+    images.value = '';
+    video.value = '';
+
+    alert('Produto salvo com sucesso!');
+    showPage('admin');
+    render();
+    renderAdmin();
+  };
+
+  if(videoFile){
+    const vr = new FileReader();
+    vr.onload = e => { videoData = e.target.result; finish(); };
+    vr.readAsDataURL(videoFile);
+  }
+
+  if(files.length){
+    [...files].forEach(file=>{
+      const r = new FileReader();
+      r.onload = e => { imgs.push(e.target.result); finish(); };
+      r.readAsDataURL(file);
+    });
+  }else{
+    finish();
+  }
+}
+
+
+function render(){
+  productList.innerHTML = '';
+  allProducts.innerHTML = '';
+
+  const search = document.getElementById('searchInput')?.value.toLowerCase() || '';
+
+products
+  .filter(p => p.title.toLowerCase().includes(search))
+  .forEach((p, index)=>{
+
+    const card = `
+      <div class="card">
+			<img src="${p.imgs?.[0] || ''}">
+        <h3>${p.title}</h3>
+        <p class="price">R$ ${p.price}</p>
+        <button class="btn" onclick="openProduct(${p.id})">Ver Produto</button>
+      </div>`;
+
+    // Exemplo: primeiros 4 são destaques
+    if(index < 4){
+      productList.innerHTML += card;
+    }
+	
+    // Todos os produtos
+    allProducts.innerHTML += card;
+  });
+
+  cartCount.innerText = cart.length;
+
+let total = 0;
+cartItems.innerHTML = '';
+
+cart.forEach((c,index)=>{
+  total += Number(c.price);
+  cartItems.innerHTML += `
+    <div class="card">
+      <h4>${c.title}</h4>
+      <p>R$ ${c.price}</p>
+      <button class="btn" style="background:#ff3d3d;color:#fff"
+        onclick="removeFromCart(${index})">
+        ❌ Remover
+      </button>
+    </div>
+  `;
+});
+
+cartTotal.innerText = 'Total: R$ ' + total.toFixed(2);
+
+
+}
+
+function renderAdmin(){
+  const adminProducts = document.getElementById('adminProducts');
+  adminProducts.innerHTML = '';
+
+  if(products.length === 0){
+    adminProducts.innerHTML = '<p>Nenhum produto cadastrado.</p>';
+    return;
+  }
+
+ [...products]
+  .sort((a,b)=>b.id - a.id) // mais recente primeiro
+  .forEach((p, index)=>{
+
+    adminProducts.innerHTML += `
+      <div class="card">
+        <img src="${p.imgs[0]}"
+		onmousemove="showPreview(event,'${p.imgs[0]}')"
+		onmouseleave="hidePreview()">
+
+        <h3>${p.title}</h3>
+        <p class="price">R$ ${p.price}</p>
+
+        <button class="btn" onclick="editProduct(${index})">
+          ✏️ Editar
+        </button>
+
+        <button class="btn"
+          style="background:#ff3d3d;color:#fff"
+          onclick="deleteProduct(${index})">
+          🗑️ Apagar
+        </button>
+      </div>
+    `;
+  });
+}
+
+
+function deleteProduct(index){
+  if(!confirm('Deseja realmente apagar este produto?')) return;
+
+  products.splice(index,1);
+  localStorage.setItem('products', JSON.stringify(products));
+
+  renderAdmin();
+  render();
+}
+
+function editProduct(index){
+  const p = products[index];
+
+  title.value = p.title;
+  price.value = p.price;
+  desc.value = p.desc;
+  ratingInput.value = p.rating;
+
+  editingIndex = index;
+
+  showPage('admin');
+}
+
+
+function openProduct(id){
+  const p = products.find(x=>x.id===id);
+
+  let gallery = '';
+  p.imgs.forEach(img=>{
+    gallery += `<img src="${img}" style="width:120px;margin:5px;border-radius:6px">`;
+  });
+
+  productDetail.innerHTML = `
+    <div>${gallery}</div>
+    ${p.video ? `<video src="${p.video}" controls style="max-width:300px;border-radius:8px"></video>` : ''}
+
+    <h2>${p.title}</h2>
+    <p>${p.desc}</p>
+    <p class="price">R$ ${p.price}</p>
+    <div class="stars">${'★'.repeat(p.rating)}</div>
+
+    <button class="btn" onclick="addToCart(${id})">
+      🛒 Adicionar ao Carrinho
+    </button>
+  `;
+  
+  showPage('product');
+}
+
+ function addToCart(id){
+  cart.push(products.find(p=>p.id===id));
+  localStorage.setItem('cart',JSON.stringify(cart));
+  alert('Adicionado ao carrinho');
+  render();
+}
+
+function checkout(){
+  if(cart.length === 0){
+    alert('Carrinho vazio!');
+    return;
+  }
+
+  let msg = '🛒 *Pedido AGSStore*%0A%0A';
+  let total = 0;
+
+  cart.forEach(c=>{
+    msg += `• ${c.title} - R$ ${c.price}%0A`;
+    total += Number(c.price);
+  });
+
+  msg += `%0A*Total:* R$ ${total.toFixed(2)}`;
+
+  window.open(`https://wa.me/5585988855751?text=${msg}`, '_blank');
+}
+
+
+function removeFromCart(index){
+  cart.splice(index,1);
+  localStorage.setItem('cart',JSON.stringify(cart));
+  render();
+}
+
+
+// 🔐 ATALHO SECRETO DO ADMIN
+let secret = '';
+const SECRET_CODE = 'agsadmin'; // <<< MUDE SE QUISER
+
+document.addEventListener('keydown', (e)=>{
+  secret += e.key.toLowerCase();
+
+  // mantém o tamanho do código
+  if(secret.length > SECRET_CODE.length){
+    secret = secret.slice(-SECRET_CODE.length);
+  }
+
+  if(secret === SECRET_CODE){
+    secret = '';
+    showPage('admin');
+  }
+});
+
+function iptvPlan(plan){
+  const msg = encodeURIComponent(
+    `Olá! Tenho interesse no plano IPTV:\n\n${plan}`
+  );
+
+  window.open(
+    `https://wa.me/5585988855751?text=${msg}`,
+    '_blank'
+  );
+}
+
+	function addIptvBanner(){
+  const file = document.getElementById('iptvBannerInput').files[0];
+  if(!file){
+    alert('Selecione uma imagem');
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = e=>{
+    iptvBanners.push(e.target.result);
+    localStorage.setItem('iptvBanners', JSON.stringify(iptvBanners));
+    renderIptvBannersAdmin();
+    renderIptvBanners();
+  };
+  reader.readAsDataURL(file);
+	}
+
+	function renderIptvBannersAdmin(){
+  const area = document.getElementById('iptvBannerAdmin');
+  area.innerHTML = '';
+
+  iptvBanners.forEach((b,index)=>{
+    area.innerHTML += `
+      <div class="card">
+        <img src="${b}">
+        <button class="btn" style="background:#ff3d3d;color:#fff"
+          onclick="removeIptvBanner(${index})">
+          🗑️ Remover
+        </button>
+      </div>
+    `;
+  });
+	}
+
+	function removeIptvBanner(index){
+  iptvBanners.splice(index,1);
+  localStorage.setItem('iptvBanners', JSON.stringify(iptvBanners));
+  renderIptvBannersAdmin();
+  renderIptvBanners();
+	}
+
+	function renderIptvBanners(){
+  const area = document.getElementById('iptvBanners');
+  if(!area) return;
+
+  area.innerHTML = '';
+  iptvBanners.forEach(b=>{
+    area.innerHTML += `
+      <div class="card">
+        <img src="${b}">
+      </div>
+    `;
+  });
+	}
+
+
+  render();
+  renderIptvBanners();
+	renderIptvBannersAdmin();
+
+	function showPreview(e,src){
+  const preview = document.getElementById('imgPreview');
+  const img = preview.querySelector('img');
+
+  img.src = src;
+  preview.style.display = 'block';
+  preview.style.left = (e.clientX + 20) + 'px';
+  preview.style.top = (e.clientY + 20) + 'px';
+}
+
+function hidePreview(){
+  document.getElementById('imgPreview').style.display = 'none';
+}
+
+
+
+</script>
+			
+	<div id="imgPreview" style="
+	position:fixed;
+	display:none;
+	z-index:9999;
+	pointer-events:none;
+	">
+	<img style="
+    width:260px;
+    border-radius:14px;
+    box-shadow:0 20px 40px rgba(0,0,0,.8);
+	">
+	</div>
+
+</body>
+</html>
