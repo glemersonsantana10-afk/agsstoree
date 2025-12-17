@@ -465,6 +465,65 @@ footer{
 }
 
 
+
+
+@media (max-width: 600px){
+
+  /* Card principal do Pix */
+  #cart .card{
+    max-width: 92%;
+    margin: 20px auto;
+    padding: 16px;
+    border-radius: 16px;
+    text-align: center;
+  }
+
+  /* Título */
+  #cart h3{
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  /* QR Code */
+  #cart img{
+    width: 220px;      /* 🔑 menor */
+    height: auto;
+    margin: 15px auto;
+    display: block;
+  }
+
+  /* Nome do recebedor */
+  #cart strong,
+  #cart div{
+    font-size: 14px;
+  }
+
+  /* Chave Pix */
+  #cart div[onclick="copyPixDirect()"]{
+    font-size: 15px;
+    padding: 10px 14px;
+    margin-top: 10px;
+  }
+
+  /* Botão Já paguei */
+  #cart .btn{
+    width: 80%;
+    margin: 20px auto 0;
+    padding: 14px;
+    font-size: 15px;
+    border-radius: 14px;
+  }
+}
+
+
+
+@media (max-width: 600px){
+  header img{
+    width: 130px;   /* diminui a logo */
+    height: auto;
+  }
+}
+
 @media (max-width: 600px){
 
   /* Container dos cards (se existir) */
