@@ -420,6 +420,46 @@ footer{
 }
 
 
+/* MINIATURAS */
+.thumbs{
+  margin-top:12px;
+  display:flex;
+  gap:10px;
+  justify-content:center;
+}
+
+.thumb{
+  width:80px;
+  height:80px;
+  object-fit:cover;
+  border-radius:10px;
+  cursor:pointer;
+  opacity:.6;
+  transition:.2s;
+}
+
+.thumb:hover{
+  opacity:1;
+  transform:scale(1.05);
+}
+
+/* ===== ZOOM NA IMAGEM DO PRODUTO ===== */
+.productImage{
+  overflow:hidden;              /* impede imagem de sair do container */
+  border-radius:16px;
+}
+
+#mainImage{
+  transition: transform .35s ease;
+  cursor: zoom-in;
+}
+
+/* ZOOM AO PASSAR O MOUSE */
+#mainImage:hover{
+  transform: scale(1.15);
+}
+
+
   </style>
 </head>
 <body>
@@ -607,15 +647,15 @@ let etapaCheckout = 'carrinho';
 
 // ======= STORAGE =======
 const products = [
-	{id:1,title:'CASE HD',price:35,desc:'Case para HD',imgs:['CASE.jpg']},
+	{id:1,title:'CASE HD',price:35,desc:'Case para HD',imgs: ['case.jpg', 'case2.jpg','case2.jpg']},
 	
-	{id:2,title:'Cartão SD 64GB',price:45,desc:'Cartão Sandisk',imgs:['CARDSD.jpg']},
+	{id:2,title:'Cartão SD 64GB',price:45,desc:'Cartão Sandisk',imgs: ['cardsd.jpg', 'cardsd2.jpg','cardsd3.jpg']},
 	
-	{id:3,title:'HD 500GB',price:140,desc:'HD Toshiba',imgs:['HD.jpg']},
+	{id:3,title:'HD 500GB',price:140,desc:'HD Toshiba',imgs: ['hd.jpg', 'hd2.jpg','hd2.jpg']},
 	
-	{id:4,title:'Tv panasonic',price:450,desc:'tv panasonic smart viera 32 polegadas obs.não ta recebendo sinal de controle remoto mas vai um teclado para substituir',imgs:['tv.jpg']},
+	{id:4,title:'Tv panasonic',price:450,desc:'tv panasonic smart viera 32 polegadas obs.não ta recebendo sinal de controle remoto mas vai um teclado para substituir',imgs: ['tv.jpg','tv.jpg','tv.jpg']},
 	
-	{id:5,title:'HD 500GB',price:1750,desc:'configuração</br> i5 3470 3.20ghz; placa mae b75bu lga 1155; placa de video gtx 550ti; ssd de 240 com windows 11; hd de 1000gb; memoria ram 16gb teclado e mouse com led; monitor 19 polegadas 75hz; coixa de som bluetooth; adaptadores wi-fi e bluetooth; mouse pad. obs.aceito cartão',imgs:['pc.jpg']}
+	{id:5,title:'HD 500GB',price:1750,desc:'configuração</br> i5 3470 3.20ghz; placa mae b75bu lga 1155; placa de video gtx 550ti; ssd de 240 com windows 11; hd de 1000gb; memoria ram 16gb teclado e mouse com led; monitor 19 polegadas 75hz; coixa de som bluetooth; adaptadores wi-fi e bluetooth; mouse pad. obs.aceito cartão',imgs: ['pc.jpg','pc.jpg','pc.jpg']}
 ];
 
 let cart = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -866,10 +906,14 @@ if(btn){
   const p = products.find(x => x.id === id);
   if(!p) return;
 
+  const thumbs = p.imgs.slice(0,3).map((img, i) =>
+    `<img src="${img}" onclick="trocarImagem('${img}')" class="thumb">`
+  ).join('');
+
   productDetail.innerHTML = `
     <div class="productView productLeft">
 
-      <!-- COLUNA ESQUERDA -->
+      <!-- INFO + BOTÃO -->
       <div class="productInfo leftInfo">
         <h2>${p.title}</h2>
         <p class="price">R$ ${p.price}</p>
@@ -882,7 +926,11 @@ if(btn){
 
       <!-- IMAGEM -->
       <div class="productImage">
-        <img src="${p.imgs[0]}">
+        <img id="mainImage" src="${p.imgs[0]}">
+
+        <div class="thumbs">
+          ${thumbs}
+        </div>
       </div>
 
     </div>
@@ -890,6 +938,7 @@ if(btn){
 
   showPage('product');
 }
+
 
 
 	function addToCart(id){
@@ -1177,6 +1226,12 @@ if(btn){
     </div>
   `;
 }
+
+
+	function trocarImagem(src){
+  document.getElementById('mainImage').src = src;
+}
+
 
 // 🔐 ATALHO SECRETO DO ADMIN
 let secret = '';
