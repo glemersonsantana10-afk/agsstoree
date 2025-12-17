@@ -52,7 +52,7 @@ body{
   
   .grid{
   display:grid;
-  grid-template-columns:repeat(5, 1fr);
+		grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
   gap:20px
 }
 
@@ -365,7 +365,6 @@ footer{
   .leftInfo{
     max-width:200%;
   }
-}
 
 
 /* MINIATURAS */
@@ -547,6 +546,50 @@ footer{
 }
 
 
+/* ===== MENU PADRÃO (DESKTOP + MOBILE) ===== */
+.mainNav{
+  display:flex;
+  gap:10px;
+}
+
+/* BOTÕES IGUAIS */
+.navBtn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-width:130px;
+  height:42px;
+  padding:0 14px;
+  border-radius:12px;
+  background:linear-gradient(45deg,var(--primary),var(--secondary));
+  color:#000;
+  font-weight:700;
+  text-decoration:none;
+  font-size:14px;
+  transition:.25s;
+}
+
+/* HOVER */
+.navBtn:hover{
+  transform:scale(1.05);
+}
+
+/* MOBILE */
+@media (max-width:600px){
+  .mainNav{
+    width:100%;
+    justify-content:space-between;
+  }
+
+  .navBtn{
+    flex:1;
+    min-width:auto;
+    height:44px;
+    font-size:13px;
+  }
+}
+
+
   </style>
 </head>
 <body>
@@ -555,19 +598,20 @@ footer{
 
 
   <img src="agsstore.png" alt="AGSStore">
-   <nav>
-  <a href="#" onclick="showPage('home')">
-    <span class="sectionTitle">Loja</span>
+  <nav class="mainNav">
+  <a href="#" onclick="showPage('home')" class="navBtn">
+    🏬 Loja
   </a>
 
-  <a href="#" onclick="showPage('agsiptv')">
-    <span class="sectionTitle">AGS IPTV</span>
+  <a href="#" onclick="showPage('agsiptv')" class="navBtn">
+    📺 AGS IPTV
   </a>
 
-  <a href="#" onclick="showPage('cart')">
+  <a href="#" onclick="showPage('cart')" class="navBtn">
     🛒 Carrinho (<span id="cartCount">0</span>)
   </a>
 </nav>
+
 
 </header>
 
@@ -605,7 +649,7 @@ footer{
     <div id="productDetail"></div>
   </section>
 
-																						<!--CARRINHO--!>
+																						<!--CARRINHO-->
 <section id="cart" class="hidden">
   <h2>Carrinho</h2>
   <div id="cartItems"></div>
@@ -734,15 +778,15 @@ let etapaCheckout = 'carrinho';
 
 // ======= STORAGE =======
 const products = [
-	{id:1,title:'CASE HD',price:35,desc:'Case para HD',imgs: ['case.jpg', 'case2.jpg','case3.jpg']},
+			{id:1,title:'CASE HD',price:35,desc:'Case para HD',imgs: ['case.jpg', 'case2.jpg','case3.jpg']},
 	
-	{id:2,title:'Cartão SD 64GB',price:45,desc:'Cartão Sandisk',imgs: ['cardsd.jpg', 'cardsd2.jpg','cardsd3.jpg']},
+			{id:2,title:'Cartão SD 64GB',price:45,desc:'Cartão Sandisk',imgs: ['cardsd.jpg', 'cardsd2.jpg','cardsd3.jpg']},
 	
-	{id:3,title:'HD 500GB',price:140,desc:'HD Toshiba',imgs: ['hd.jpg', 'hd2.jpg','hd3.jpg']},
+			{id:3,title:'HD 500GB',price:140,desc:'HD Toshiba',imgs: ['hd.jpg', 'hd2.jpg','hd3.jpg']},
 	
-	{id:4,title:'Tv panasonic',price:450,desc:'tv panasonic smart viera 32 polegadas obs.não ta recebendo sinal de controle remoto mas vai um teclado para substituir',imgs: ['tv.jpg','tv2.jpg','tv3.jpg']},
+			{id:4,title:'Tv panasonic',price:450,desc:'tv panasonic smart viera 32 polegadas obs.não ta recebendo sinal de controle remoto mas vai um teclado para substituir',imgs: ['tv.jpg','tv2.jpg','tv3.jpg']},
 	
-	{id:5,title:'HD 500GB',price:1750,desc:'configuração</br> i5 3470 3.20ghz; placa mae b75bu lga 1155; placa de video gtx 550ti; ssd de 240 com windows 11; hd de 1000gb; memoria ram 16gb teclado e mouse com led; monitor 19 polegadas 75hz; coixa de som bluetooth; adaptadores wi-fi e bluetooth; mouse pad. obs.aceito cartão',imgs: ['pc.jpg','pc2.jpg','pc3.jpg']}
+			{id:5,title:'PC Gamer i5 + GTX 550Ti',price:1750,desc:'configuração<br> i5 3470 3.20ghz; placa mae b75bu lga 1155; placa de video gtx 550ti; ssd de 240 com windows 11; hd de 1000gb; memoria ram 16gb teclado e mouse com led; monitor 19 polegadas 75hz; coixa de som bluetooth; adaptadores wi-fi e bluetooth; mouse pad. obs.aceito cartão',imgs: ['pc.jpg','pc2.jpg','pc3.jpg']}
 ];
 
 let cart = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -792,7 +836,9 @@ const adminPanel = document.getElementById('adminPanel');
     const productData = {
       id: editingIndex !== null ? products[editingIndex].id : Date.now(),
       title: title.value,
-      price: price.value,
+	  
+		price: parseFloat(price.value.replace(',','.')),
+
       desc: desc.value,
       rating: ratingInput.value,
       imgs: imgs.length ? imgs : (editingIndex !== null ? products[editingIndex].imgs : []),
