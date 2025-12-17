@@ -590,6 +590,118 @@ footer{
 }
 
 
+/* ===== BOTÃO ATIVO ===== */
+.navBtn{
+  position:relative;
+  overflow:visible; /* ✅ permite o badge aparecer */
+}
+
+
+.navBtn.active{
+  box-shadow:0 0 0 2px #fff,
+             0 0 20px rgba(0,229,255,.9);
+  transform:scale(1.06);
+}
+
+
+}
+
+@keyframes pulseBadge{
+  0%{transform:scale(.7)}
+  50%{transform:scale(1.2)}
+  100%{transform:scale(1)}
+}
+
+#cartBtn{
+  position:relative;
+}
+
+														/* ===== BADGE DO CARRINHO ===== */
+
+.cartBadge{
+  position:absolute;
+  top:-8px;
+  right:-8px;
+
+  background:#FF0000;   /* círculo laranja */
+  color:#000;           /* 🔢 cor do número (PRETO) */
+
+  width:22px;
+  height:22px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:25px;
+  font-weight:800;
+  line-height:22px;     /* 👈 força centralização perfeita */
+
+  border-radius:50%;
+  z-index:9999;
+
+  box-shadow:0 0 0 2px #0b0b0f;
+}
+
+
+
+
+
+
+													/* ===== ANIMAÇÃO AO ADICIONAR AO CARRINHO ===== */
+
+/* PULO DO CARD */
+.card.added{
+  animation:cardJump .6s ease;
+}
+
+@keyframes cardJump{
+  0%{transform:scale(1)}
+  30%{transform:scale(1.06)}
+  60%{transform:scale(.98)}
+  100%{transform:scale(1)}
+}
+
+/* BOTÃO CONFIRMAÇÃO */
+.btn.added{
+  animation:btnConfirm .5s ease;
+}
+
+@keyframes btnConfirm{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.15)}
+  100%{transform:scale(1)}
+}
+
+/* BADGE PULSE REFORÇADO */
+.cartBadge.pulse{
+  animation:pulseBadge .6s ease;
+}
+
+#storeBanners .card img{
+  height:220px;
+  border-radius:18px;
+}
+
+input.error{
+  border:2px solid #ff3d3d;
+  animation:shake .3s;
+}
+
+@keyframes shake{
+  0%{transform:translateX(0)}
+  25%{transform:translateX(-4px)}
+  50%{transform:translateX(4px)}
+  75%{transform:translateX(-4px)}
+  100%{transform:translateX(0)}
+}
+
+#cartBtn{
+  position:relative;
+}
+
+
+
   </style>
 </head>
 <body>
@@ -607,9 +719,11 @@ footer{
     📺 AGS IPTV
   </a>
 
-  <a href="#" onclick="showPage('cart')" class="navBtn">
-    🛒 Carrinho (<span id="cartCount">0</span>)
-  </a>
+<a href="#" onclick="showPage('cart')" class="navBtn" id="cartBtn">
+  🛒 Carrinho
+  <span class="cartBadge" id="cartBadge" style="display:none">0</span>
+</a>
+
 </nav>
 
 
@@ -634,6 +748,14 @@ footer{
   "
   oninput="render()"
 />
+																						<!-- BANNERS -->
+	<div class="grid" id="storeBanners"></div>
+			<div class="grid">
+				<div class="card"><img src="img1.jpg"></div>
+				<div class="card"><img src="img2.jpg"></div>
+			</div>
+
+
 
     <h2>Destaques</h2>
     <div class="grid" id="productList"></div>
@@ -663,7 +785,18 @@ footer{
 
 																						<!-- AGS IPTV -->
  <section id="agsiptv" class="hidden">  
+ 
+ 
 	<div id="iptvBanners" class="grid"></div>
+																						<!-- BANNERS AGS IPTV -->
+	<div class="grid" id="storeBanners"></div>
+
+			<div class="grid">
+				<div class="card"><img src="iptv-banner1.jpg"></div>
+				<div class="card"><img src="iptv-banner2.jpg"></div>
+			</div>
+
+
 
   <h2 class="sectionTitle">Planos AGS IPTV</h2>
 
@@ -770,6 +903,10 @@ footer{
 
 
 
+
+
+
+
 <script>
 
 let etapaCheckout = 'carrinho'; 
@@ -800,7 +937,7 @@ const adminPanel = document.getElementById('adminPanel');
 
 
 
-
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
@@ -911,6 +1048,8 @@ const adminPanel = document.getElementById('adminPanel');
         ? 'block'
         : 'none';
   }
+  
+  setActiveNav(id);
 }
 
 
@@ -941,7 +1080,7 @@ products
     allProducts.innerHTML += card;
   });
 
-  cartCount.innerText = cart.length;
+	updateCartBadge();
 
 let total = 0;
 cartItems.innerHTML = '';
@@ -970,6 +1109,8 @@ if(btn){
     ? 'block'
     : 'none';
 }
+
+
 }
 
 
@@ -1075,11 +1216,33 @@ if(btn){
 
 
 	function addToCart(id){
-  cart.push(products.find(p=>p.id===id));
+  const product = products.find(p=>p.id===id);
+  cart.push(product);
   localStorage.setItem('cart',JSON.stringify(cart));
-  alert('Adicionado ao carrinho');
-  render();
+
+  // ===== ANIMAÇÃO BOTÃO =====
+  const btn = document.querySelector('.bigBtn');
+  if(btn){
+    btn.classList.add('added');
+    setTimeout(()=>btn.classList.remove('added'),500);
+  }
+
+  // ===== ANIMAÇÃO CARD (HOME) =====
+  document.querySelectorAll('.card').forEach(card=>{
+    if(card.innerText.includes(product.title)){
+      card.classList.add('added');
+      setTimeout(()=>card.classList.remove('added'),600);
+    }
+  });
+
+  // feedback leve (sem alert chato)
+  toast('🛒 Produto adicionado ao carrinho');
+
+
+	updateCartBadge();
+	render();
 }
+
 																					//CHECKOUT
 																					
 	function checkout(){
@@ -1104,9 +1267,15 @@ if(btn){
 
       <h3>📋 Dados para Entrega</h3>
 
-      <input id="nome" placeholder="👤 Nome completo">
-      <input id="contato" placeholder="📞 WhatsApp">
-      <input id="cep" placeholder="📮 CEP" onblur="buscarCep()">
+      <input id="nome" placeholder="👤 Nome completo"
+        oninput="this.value=this.value.replace(/[^a-zA-ZÀ-ÿ\s]/g,'')">
+
+      <input id="contato" placeholder="📞 WhatsApp"
+        maxlength="16" inputmode="numeric">
+
+      <input id="cep" placeholder="📮 CEP"
+        maxlength="9" inputmode="numeric">
+
       <input id="rua" placeholder="🏠 Rua">
       <input id="numero" placeholder="🔢 Número">
       <input id="bairro" placeholder="📍 Bairro">
@@ -1118,8 +1287,10 @@ if(btn){
     </div>
   `;
 
+  aplicarMascaras();   // 👈 MUITO IMPORTANTE
   cartTotal.innerHTML = '';
 }
+
 																					//PIX
 	
 	function confirmarPix(){
@@ -1178,8 +1349,16 @@ if(btn){
   if(cart.length === 0){
     etapaCheckout = 'carrinho';
   }
-
+  
+updateCartBadge();
   render();
+  
+  const badge = document.getElementById('cartBadge');
+if(badge && cart.length === 0){
+  badge.style.display = 'none';
+}
+
+
 }
 
 
@@ -1269,40 +1448,38 @@ if(btn){
   document.getElementById('imgPreview').style.display = 'none';
 }
 
+	
+	function prontoDados(){
 
-	function buscarCep(){
-  const cep = document.getElementById('cep').value.replace(/\D/g,'');
+  const cepInput = document.getElementById('cep');
+  const contatoInput = document.getElementById('contato');
 
-  if(cep.length !== 8){
-    alert('CEP inválido');
+  if(!cepInput || !contatoInput) return;
+
+  if(!/^\d{5}-\d{3}$/.test(cepInput.value)){
+    toast('❌ CEP inválido');
+    cepInput.focus();
     return;
   }
 
-  fetch(`https://viacep.com.br/ws/${cep}/json/`)
-    .then(r => r.json())
-    .then(data => {
-      if(data.erro){
-        alert('CEP não encontrado');
-        return;
-      }
+  if(!/^\(\d{2}\) 9 \d{4}-\d{4}$/.test(contatoInput.value)){
+    toast('❌ WhatsApp inválido');
+    contatoInput.focus();
+    return;
+  }
 
-      document.getElementById('rua').value = data.logradouro;
-      document.getElementById('bairro').value = data.bairro;
-    });
-}
+  /* continua o código normal aqui */
 
-
-	function prontoDados(){
   const nome = document.getElementById('nome').value.trim();
-  const contato = document.getElementById('contato').value.trim();
-  const cep = document.getElementById('cep').value.trim();
   const rua = document.getElementById('rua').value.trim();
   const numero = document.getElementById('numero').value.trim();
   const bairro = document.getElementById('bairro').value.trim();
 
+
   if(!nome || !contato || !cep || !rua || !numero || !bairro){
-    alert('Preencha todos os campos');
+    toast('⚠️ Preencha todos os campos corretamente');
     return;
+	
   }
 
   window.dadosCliente = { nome, contato, cep, rua, numero, bairro };
@@ -1366,45 +1543,206 @@ if(btn){
 }
 
 
-// 🔐 ATALHO SECRETO DO ADMIN
-let secret = '';
-const SECRET_CODE = 'agsadmin'; // <<< MUDE SE QUISER
+	function setActiveNav(id){
+  document.querySelectorAll('.navBtn').forEach(btn=>{
+    btn.classList.remove('active');
+  });
 
-document.addEventListener('keydown', (e)=>{
-  secret += e.key.toLowerCase();
+  if(id === 'home'){
+    document.querySelector('.navBtn:nth-child(1)').classList.add('active');
+  }
+  if(id === 'agsiptv'){
+    document.querySelector('.navBtn:nth-child(2)').classList.add('active');
+  }
+  if(id === 'cart'){
+    document.querySelector('.navBtn:nth-child(3)').classList.add('active');
+  }
+}
 
-  // mantém o tamanho do código
-  if(secret.length > SECRET_CODE.length){
-    secret = secret.slice(-SECRET_CODE.length);
+
+	function toast(msg){
+  const t = document.getElementById('toast');
+  t.innerHTML = msg;
+  t.style.opacity = '1';
+  t.style.bottom = '50px';
+
+  setTimeout(()=>{
+    t.style.opacity = '0';
+    t.style.bottom = '30px';
+  },1500);
+}
+
+
+	function updateCartBadge(){
+  const badge = document.getElementById('cartBadge');
+  if(!badge) return;
+
+  const count = cart.length;
+
+  badge.innerText = count;
+
+  if(count > 0){
+    badge.style.display = 'block';
+  }else{
+    badge.style.display = 'none';
+  }
+}
+
+
+	function validarWhatsapp(){
+  const input = document.getElementById('contato');
+  if(!input) return false;
+
+  const valor = input.value;
+
+  if(!/^\(\d{2}\) 9 \d{4}-\d{4}$/.test(valor)){
+    toast('❌ WhatsApp inválido. Ex: (11) 9 1234-5678');
+    input.focus();
+    return false;
+  }
+  return true;
+}
+
+
+	function validarCep(){
+  const input = document.getElementById('cep');
+  if(!input) return false;
+
+  const cep = input.value;
+
+  if(!/^\d{5}-\d{3}$/.test(cep)){
+    toast('❌ CEP inválido. Use 12345-678');
+    input.focus();
+    return false;
   }
 
-  if(secret === SECRET_CODE){
-    secret = '';
-    showPage('admin');
+  // opcional: buscar endereço
+  if(typeof buscarCep === 'function'){
+    buscarCep();
   }
-});
 
-  // remove qualquer total antigo
-  cartTotal.innerHTML = '';
-  render();
-  renderIptvBanners();
-	renderIptvBannersAdmin();
+  return true;
+}
+
+
+	function finalizarPedido(){
+  const cepOk = /^\d{5}-\d{3}$/.test(cep.value);
+  const telOk = /^\(\d{2}\) 9 \d{4}-\d{4}$/.test(contato.value);
+
+  if(!cepOk || !telOk){
+    toast('⚠️ Preencha CEP e WhatsApp corretamente');
+    return;
+  }
+
+  // continua o fluxo normal
+}
+
+
+function aplicarMascaras(){
+
+  const cep = document.getElementById('cep');
+  const contato = document.getElementById('contato');
+
+  if(cep){
+    cep.addEventListener('input', ()=>{
+      let v = cep.value.replace(/\D/g,'');
+      if(v.length > 5) v = v.replace(/(\d{5})(\d)/,'$1-$2');
+      cep.value = v;
+    });
+  }
+
+  if(contato){
+    contato.addEventListener('input', ()=>{
+      let v = contato.value.replace(/\D/g,'');
+
+      if(v.length > 0)
+        v = v.replace(/^(\d{0,2})/, '($1');
+
+      if(v.length > 3)
+        v = v.replace(/^(\(\d{2})(\d)/, '$1) $2');
+
+      if(v.length > 6)
+        v = v.replace(/^(\(\d{2}\) \d)(\d)/, '$1 $2');
+
+      if(v.length > 11)
+        v = v.replace(/(\d{4})(\d)/, '$1-$2');
+
+      contato.value = v;
+    });
+  }
+}
+
+
+
+
+
+
+
+
+																			// 🔐 ATALHO SECRETO DO ADMIN
+				let secret = '';
+				const SECRET_CODE = 'agsadmin'; // <<< MUDE SE QUISER
+
+				document.addEventListener('keydown', (e)=>{
+				secret += e.key.toLowerCase();
+
+																		// mantém o tamanho do código
+				if(secret.length > SECRET_CODE.length){
+				secret = secret.slice(-SECRET_CODE.length);}
+
+				if(secret === SECRET_CODE){
+				secret = '';
+				showPage('admin');}
+				});
+
+																		// remove qualquer total antigo
+				cartTotal.innerHTML = '';
+				render();
+				renderIptvBanners();
+				renderIptvBannersAdmin();
+				updateCartBadge();
+
+				
 
 </script>
 	
 	
-	<div id="imgPreview" style="
-	position:fixed;
-	display:none;
-	z-index:9999;
-	pointer-events:none;
-	">
-	<img style="
-    width:260px;
-    border-radius:14px;
-    box-shadow:0 20px 40px rgba(0,0,0,.8);
-	">
-	</div>
+			<div id="imgPreview" style="
+				position:fixed;
+					display:none;
+						z-index:9999;
+							pointer-events:none;">
+								<img style="
+							width:260px;
+						border-radius:14px;
+					box-shadow:0 20px 40px rgba(0,0,0,.8);">
+			</div>
+
+
+
+
+			<div id="toast" style="
+				position:fixed;
+					bottom:30px;
+						left:50%;
+							transform:translateX(-50%);
+								background:#111;
+									color:#00e5ff;
+										padding:14px 20px;
+									border-radius:14px;
+								font-weight:600;
+							box-shadow:0 20px 40px rgba(0,0,0,.6);
+						opacity:0;
+					pointer-events:none;
+				transition:.4s;
+			z-index:9999;
+		"></div>
+
+</script>
+
+
+
+
 
 </body>
 </html>
