@@ -752,6 +752,83 @@ footer{
 }
 
 
+@media (max-width: 600px){
+
+  /* ===== HEADER ===== */
+  header{
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  /* LOGO */
+  header img{
+    width: 80px;
+  }
+
+  /* ===== MENU ===== */
+  .mainNav{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 44px; /* carrinho menor */
+    gap: 8px;
+  }
+
+  /* BOTÕES */
+  .navBtn{
+    height: 38px;
+    font-size: 11px;      /* 🔑 texto menor */
+    font-weight: 600;
+    border-radius: 10px;
+    padding: 0;
+  }
+
+  /* AGS IPTV destaque */
+  .navBtn.active{
+    box-shadow: 0 0 10px rgba(0,229,255,.8);
+    transform: scale(1.03);
+  }
+
+  /* ===== CARRINHO ===== */
+  #cartBtn{
+    width: 44px;
+    height: 38px;
+    border-radius: 50%;
+  }
+
+  #cartBtn img{
+    width: 20px;
+    height: 20px;
+  }
+
+}
+
+
+@media (max-width: 600px){
+
+  /* ===== BANNERS LOJA E IPTV ===== */
+  #storeBanners .card img,
+  #iptvBanners .card img{
+    width: 100%;
+    height: 140px;        /* ideal p/ 1920x720 */
+    object-fit: cover;
+    border-radius: 14px;
+  }
+
+  #storeBanners .card,
+  #iptvBanners .card{
+    padding: 0;
+    border-radius: 14px;
+  }
+
+}
+
+
+#storeBanners img,
+#iptvBanners img{
+  box-shadow: 0 10px 30px rgba(0,0,0,.5);
+}
+
+
 
 
 /* ===== MENU PADRÃO (DESKTOP + MOBILE) ===== */
@@ -953,7 +1030,6 @@ input.error{
 	<div class="grid" id="storeBanners"></div>
 			<div class="grid">
 				<div class="card"><img src="img1.jpg"></div>
-				<div class="card"><img src="img2.jpg"></div>
 			</div>
 
 
@@ -995,7 +1071,6 @@ input.error{
 
 			<div class="grid">
 				<div class="card"><img src="iptv-banner1.jpg"></div>
-				<div class="card"><img src="iptv-banner2.jpg"></div>
 			</div>
 
 
