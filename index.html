@@ -620,6 +620,68 @@ footer{
 
 
 
+@media (max-width: 600px){
+
+  /* CARRINHO SOMENTE ÍCONE */
+  #cartBtn{
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    padding: 0;
+    background: linear-gradient(45deg,var(--primary),var(--secondary));
+  }
+
+  #cartBtn img{
+    width: 22px;
+    height: 22px;
+  }
+
+  #cartBtn span:not(.cartBadge){
+    display: none; /* esconde texto */
+  }
+
+}
+
+@media (max-width: 600px){
+
+  /* TÍTULO DO CARD */
+  #home .grid .card h3{
+    font-size: 12px;
+    line-height: 1.2;
+    margin: 4px 0;
+  }
+
+  /* DESCRIÇÃO (se existir) */
+  #home .grid .card p{
+    font-size: 11px;
+    line-height: 1.3;
+    margin: 2px 0;
+  }
+
+  /* PREÇO */
+  #home .grid .card .price{
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+}
+
+@media (max-width: 600px){
+
+  /* BOTÃO VER PRODUTO */
+  #home .grid .card .btn{
+    font-size: 11px;
+    padding: 6px 8px;
+    border-radius: 10px;
+    margin-top: 6px;
+  }
+
+}
+
+#cartBtn:active{
+  transform: scale(0.9);
+}
+
 
 
 @media (max-width: 600px){
@@ -919,6 +981,7 @@ input.error{
 <button class="btn" id="btnFinalizar" onclick="checkout()">
   Finalizar Compra
 </button>
+
 
 </section>
 
