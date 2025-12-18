@@ -770,6 +770,17 @@ let iptvBanners = JSON.parse(localStorage.getItem('iptvBanners') || '[]');
   if(footer){
     footer.style.display = (id === 'cart') ? 'none' : 'block';
   }
+
+  // 🔻 CONTROLE DO BOTÃO FINALIZAR
+const btn = document.getElementById('btnFinalizar');
+if(btn){
+  btn.style.display =
+    (id === 'cart' && etapaCheckout === 'carrinho' && cart.length > 0)
+      ? 'block'
+      : 'none';
+}
+
+  }
   
   setActiveNav(id);
 }
@@ -839,9 +850,9 @@ const btn = document.getElementById('btnFinalizar');
 
 if(btn){
   btn.style.display =
-    (cart.length > 0 && etapaCheckout === 'carrinho')
-      ? 'block'
-      : 'none';
+    (etapaCheckout === 'carrinho' && cart.length > 0)
+    ? 'block'
+    : 'none';
 }
 
 
@@ -885,7 +896,7 @@ if(btn){
 
 																					//CHECKOUT
 																					
-function checkout(){
+	function checkout(){
   if(cart.length === 0){
     alert('Carrinho vazio!');
     return;
@@ -893,18 +904,12 @@ function checkout(){
 
   etapaCheckout = 'formulario';
   renderCarrinhoFormulario();
+  updateCartBadge()
 }
-
 																					//FORMULARIO
 
-function renderCarrinhoFormulario(){
-
-  document.querySelectorAll('section').forEach(sec=>{
-    sec.classList.add('hidden');
-  });
-
-  document.getElementById('cart').classList.remove('hidden');
-
+	function renderCarrinhoFormulario(){
+  showPage('cart');
 
   const btn = document.getElementById('btnFinalizar');
   if(btn) btn.style.display = 'none';
