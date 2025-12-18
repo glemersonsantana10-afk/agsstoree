@@ -3,981 +3,474 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AGSStore</title>
+  <title>AGSstore</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <style>
-:root{
-  --bg:#091218;
-  --bg-soft:#033455;
-  --card:#1a1a22;
-  --primary:#7c4dff;
-  --secondary:#00e5ff;
-  --text:#f8a50a;
-  --danger:#ff3d3d;
-}
-
-		*{
-		box-sizing:border-box;
-		font-family:'Poppins', sans-serif;
+  
+.hidden {
+			display: none;
 		}
 
-html, body{
-  height:100%;
-}
 
-body{
-  margin:0;
-  display:flex;
-  flex-direction:column;
-  background:var(--bg);
-  color:var(--text);
-}
-    
-	.container{
-  padding:30px;
-  flex:1;}
-  
-  
-.card img{
-  width:100%;
-  height:180px;
-  object-fit:cover;
-  border-radius:8px;
-}
+/* ===== RESET ===== */
+			* {
+				box-sizing: border-box;
+			font-family: 'Poppins', sans-serif;
+		}
 
-    header{padding:20px;display:flex;align-items:center;justify-content:space-between;background:#0b0b0f}
-    header img{height:100px;width:330px}
-    nav a{color:var(--text);margin-left:5px;text-decoration:none;font-weight:bold}
-  
-  .grid{
-  display:grid;
-		grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
-  gap:20px
-}
-
-    .card{
-	box-shadow:2px 0px 5px rgba(0,0,0,.4);
+body {
+		margin: 0;
+			background: #0f0f0f;
+		color: #fff;
 	}
-    .card img{width:100%;border-radius:5px}
-    .btn{display:inline-block;margin-top:12px;padding:20px 20px;border-radius:9px;background:linear-gradient(45deg,var(--primary),var(--secondary));color:#000;font-weight:bold;text-decoration:none;border:none;cursor:pointer}
-    .price{color:var(--secondary);font-size:20px;font-weight:bold}
-	
-    .stars span{color:gold;font-size:18px;cursor:pointer}
-    .hidden{display:none}
-    input,textarea,select{width:100%;padding:8px;margin:6px 0;border-radius:6px;border:none}
-	.fileBtn{
-  display:inline-block;
-  padding:10px;
-  background:#222;
-  border:1px dashed var(--secondary);
-  border-radius:8px;
-  cursor:pointer;
-  margin:8px 0;
-}
-.fileBtn input{display:none}
 
-input, textarea{
-  max-width:400px;
-}
-textarea{
-  height:80px;
-}
-
-.sectionTitle{
-  display:inline-block;
-  padding:10px 20px;
-  background:linear-gradient(45deg,var(--primary),var(--secondary));
-  color:#000;
-  border-radius:10px;
-  margin-bottom:20px;
-}
-
-#admin input,
-#admin textarea,
-#admin select{
-  width:100%;
-  max-width:350px;
-  margin-bottom:10px;
-}
-
-#adminPanel{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-
-#adminPanel input,
-#adminPanel textarea,
-#adminPanel select{
-  width:100%;
-  max-width:400px;
+/* ===== HEADER ===== */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 40px;
+  background: #111;
 }
 
 
-#admin{
-  background:var(--bg-soft);
-  border:2px solid var(--primary);
-  border-radius:16px;
-  padding:30px;
-  max-width:900px;
-  margin:40px auto;
-  box-shadow:0 0 30px rgba(124,77,255,.2);
+header img {
+  height: 38px;
 }
-.adminTitle{
-  background:linear-gradient(45deg,#ff9800,#ff5722);
-  color:#000;
-  padding:12px 20px;
-  border-radius:12px;
-  display:inline-block;
-  margin-bottom:20px;
-}
-#admin .card{
-  background:#111;
-  border:1px solid #333;
+
+/* ===== NAV ===== */
+.mainNav {
+  display: flex;
+  gap: 8px;
 }
 
 
-.iptvPlans{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:20px;
-  margin-top:30px;
+/* carrinho só ícone */
+.cartBtn img {
+  width: 22px;
+  height: 22px;
 }
 
-.iptvBtn{
-  background:linear-gradient(45deg,#00e5ff,#7c4dff);
-  color:#000;
-  border-radius:16px;
-  padding:20px;
-  text-align:center;
-  font-weight:bold;
-  cursor:pointer;
-  transition:.3s;
-  box-shadow:0 10px 20px rgba(0,0,0,.4);
+/* badge */
+.cartBadge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: red;
+  color: #fff;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 50%;
 }
 
-.iptvBtn:hover{
-  transform:scale(1.05);
+/* ===== CONTAINER ===== */
+.container {
+  padding: 14px;
 }
 
-.iptvBtn span{
-  display:block;
-  font-size:26px;
-  margin-bottom:10px;
+/* ===== GRID ===== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
 }
 
-.iptvBtn small{
-  display:block;
-  margin-top:8px;
-  font-size:14px;
+/* ===== CARD ===== */
+.card {
+  background: #1a1a1a;
+  border-radius: 14px;
+  padding: 10px;
+  text-align: center;
 }
 
-										/* ===============================
-											LOJA – CARDS COM BORDA NEON
-										================================ */
-
-/* SOMENTE NA LOJA */
-#home .grid .card{
-  background:linear-gradient(180deg,#0b0f14,#05070b);
-  border-radius:18px;
-  padding:14px;
-  position:relative;
-  transition:.35s ease;
-  overflow:hidden;
+.card img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
-/* BORDA NEON */
-#home .grid .card::before{
-  content:"";
-  position:absolute;
-  inset:-2px;
-  border-radius:20px;
-  background:linear-gradient(
-    45deg,
-    #7c4dff,
-    #00e5ff,
-    #ff9800,
-    #7c4dff
-  );
-  opacity:.35;
-  z-index:-1;
-  filter:blur(10px);
-  transition:.35s;
+.card h3 {
+  font-size: 14px;
+  margin: 6px 0 4px;
 }
 
-/* HOVER */
-#home .grid .card:hover{
-  transform:translateY(-10px) scale(1.04);
+.price {
+  font-size: 14px;
+  font-weight: 600;
+  color: #00e5ff;
 }
 
-#home .grid .card:hover::before{
-  opacity:1;
-  filter:blur(16px);
+/* ===== BOTÃO ===== */
+.btn {
+  width: 100%;
+  border: none;
+  padding: 8px;
+  border-radius: 10px;
+  font-size: 14px;
+  background: #00e5ff;
+  color: #000;
+  cursor: pointer;
 }
 
-/* CLICK (MOBILE) */
-#home .grid .card:active{
-  transform:scale(0.97);
-}
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
 
-/* IMAGEM */
-#home .grid .card img{
-  height:190px;
-  object-fit:cover;
-  border-radius:14px;
-}
-
-/* BOTÃO */
-#home .grid .card .btn{
-  width:100%;
-  text-align:center;
-}
-
-/* ANIMAÇÃO NEON */
-@keyframes neonPulse{
-  0%{filter:blur(8px)}
-  50%{filter:blur(16px)}
-  100%{filter:blur(8px)}
-}
-
-#home .grid .card::before{
-  animation:neonPulse 3s infinite;
-}
-
-
-										/* ===============================
-											ADMIN – GRID ORGANIZADO
-										================================ */
-
-#adminProducts{
-  display:grid;
-  grid-template-columns:repeat(5, 1fr); /* 5 por linha */
-  gap:20px;
-  margin-top:20px;
-}
-
-
-footer{
-  margin-top:170px;   /* ← aumenta a distância do conteúdo */
-  background:#000;
-  padding:20px;
-  text-align:center;
-  border-top:1px solid #222;
-}
-
-
-
-.footerContent{
-  max-width:1200px;
-  margin:auto;
-  padding:30px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:30px;
-  align-items:center;
-}
-
-.footerBrand img{
-  width:160px;
-  margin-bottom:10px;
-}
-
-.footerBrand p{
-  font-size:14px;
-  opacity:.8;
-}
-
-.footerLinks h4{
-  margin-bottom:10px;
-  color:var(--secondary);
-}
-
-.footerLinks a,
-.footerLinks span{
-  display:block;
-  color:var(--text);
-  text-decoration:none;
-  font-size:14px;
-  margin-bottom:6px;
-  opacity:.85;
-  transition:.3s;
-}
-
-.footerLinks a:hover{
-  color:var(--secondary);
-  transform:translateX(4px);
-}
-
-.footerBottom{
-  text-align:center;
-  padding:15px;
-  font-size:13px;
-  border-top:1px solid rgba(255,255,255,.08);
-  opacity:.7;
-}
-
-															/* ===== VER PRODUTO – FOCO NA IMAGEM ===== */
-.productView.productLeft{
-  display:flex;
-  gap:20px;              /* deixa tudo mais próximo */
-  align-items:center;
-  justify-content:center;
-  max-width:1000px;
-  margin:auto;
-}
-
-/* BLOCO ESQUERDO */
-.leftInfo{
-  max-width:360px;
-}
-
-.leftInfo h2{
-	font-size:50px;
-	margin-bottom:40px;
-}
-
-.leftInfo .price{
-  font-size:30px;
-  margin-bottom:10px;
-}
-
-.leftInfo .desc{
-  opacity:.9;
-  margin-bottom:15px;
-}
-
-/* BOTÃO MAIOR */
-.bigBtn{
-  width:100%;
-  padding:26px;
-  font-size:18px;
-  border-radius:14px;
-}
-
-/* IMAGEM */
-.productImage img{
-  max-width:320px;
-  width:100%;
-  border-radius:16px;
-}
-
-  .leftInfo{
-    max-width:200%;
+  header img {
+    height: 32px;
   }
 
 
-/* MINIATURAS */
-.thumbs{
-  margin-top:12px;
-  display:flex;
-  gap:10px;
-  justify-content:center;
-}
-
-.thumb{
-  width:80px;
-  height:80px;
-  object-fit:cover;
-  border-radius:10px;
-  cursor:pointer;
-  opacity:.6;
-  transition:.2s;
-}
-
-.thumb:hover{
-  opacity:1;
-  transform:scale(1.05);
-}
-
-												/* ===== ZOOM NA IMAGEM DO PRODUTO ===== */
-.productImage{
-  overflow:hidden;              /* impede imagem de sair do container */
-  border-radius:16px;
-}
-
-#mainImage{
-  transition: transform .35s ease;
-  cursor: zoom-in;
-}
-
-/* ZOOM AO PASSAR O MOUSE */
-#mainImage:hover{
-  transform: scale(1.15);
-}
-
-
-/* ===== AJUSTES MOBILE ===== */
-@media (max-width: 600px){
-
-  /* Cards de planos / produtos */
-  .card,
-  .productCard,
-  .planoCard{
-    max-width: 95%;
-    padding: 12px;
-    margin: 10px auto;
-    border-radius: 14px;
-  }
-
-  /* Reduz altura dos cards grandes */
-  .card{
-    min-height: auto;
-  }
-
-  /* Preços */
-  .card h2,
-  .card h3{
-    font-size: 16px;
-    margin-bottom: 6px;
-  }
-
-  .card p{
-    font-size: 13px;
-    line-height: 1.3;
-  }
-
-  /* Ícones TV */
-  .card img,
-  .card .icon,
-  .planoCard img{
-    width: 42px;
-    height: auto;
-    margin-bottom: 6px;
-  }
-
-  /* Botões */
-  .btn,
-  button{
-    font-size: 14px;
-    padding: 10px 14px;
-    border-radius: 12px;
-  }
-
-  /* Banners */
-  .banner,
-  .banner img{
-    max-width: 100%;
-    height: auto;
-    border-radius: 14px;
-  }
-
-}
-
-
-
-
-@media (max-width: 600px){
-
-  /* Card principal do Pix */
-  #cart .card{
-    max-width: 50%;
-    margin: 20px auto;
-    padding: 16px;
-    border-radius: 16px;
-    text-align: center;
-  }
-
-  /* Título */
-  #cart h3{
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-
-  /* QR Code */
-  #cart img{
-    width: 220px;      /* 🔑 menor */
-    height: auto;
-    margin: 15px auto;
-    display: block;
-  }
-
-  /* Nome do recebedor */
-  #cart strong,
-  #cart div{
-    font-size: 14px;
-  }
-
-  /* Chave Pix */
-  #cart div[onclick="copyPixDirect()"]{
-    font-size: 15px;
-    padding: 10px 14px;
-    margin-top: 10px;
-  }
-
-  /* Botão Já paguei */
-  #cart .btn{
-    width: 80%;
-    margin: 20px auto 0;
-    padding: 14px;
-    font-size: 15px;
-    border-radius: 14px;
-  }
-}
-
-
-
-@media (max-width: 600px){
-
-  /* ===== HEADER ===== */
-  header{
-    flex-direction: column;
-    gap: 10px;
-    padding: 12px;
-  }
-
-  /* LOGO */
-  header img{
-    width: 80px;
-    margin: auto;
-  }
-
-  /* ===== MENU ===== */
-  .mainNav{
-    width: 50%;
-    display: grid;
-    grid-template-columns: 1fr 1fr auto;
-    gap: 10px;
-    align-items: center;
-  }
-
-  .navBtn{
-    height: 40px;
-    font-size: 5px;
-    border-radius: 10px;
-    padding: 0;
-  }
-
-  /* CARRINHO REDONDO */
-  #cartBtn{
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    padding: 0;
-    font-size:5px;
-  }
-
-  #cartBtn span.cartBadge{
-    top: -6px;
-    right: -6px;
-  }
-
-  /* ===== BANNER ===== */
-  #storeBanners .card,
-  #storeBanners img{
-    width: 200%;
-    height: 130px;
-    border-radius: 14px;
-  }
-
-  /* ===== GRID DE CARDS ===== */
-  #home .grid{
+  .grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
   }
 
-  /* CARD QUADRADO */
-  #home .grid .card{
-    aspect-ratio: 1 / 1;
-    padding: 10px;
-    border-radius: 14px;
+  .card img {
+    height: 100px;
+  }
 
+  .btn {
+    font-size: 13px;
+    padding: 7px;
+  }
+
+}
+
+
+#searchInput {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+.floating-cart img {
+  width: 26px;
+  height: 26px;
+}
+
+.floating-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: red;
+  color: #fff;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 50%;
+}
+
+/* só mobile */
+@media (max-width: 768px) {
+  .floating-cart {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    text-align: center;
-  }
-
-  /* IMAGEM DO CARD */
-  #home .grid .card img{
-    width: 90%;
-    height: 50%;
-    object-fit: cover;
-    border-radius: 10px;
-  }
-
-  /* TEXTO */
-  #home .grid .card h3{
-    font-size: 5px;
-    margin: 3px 0;
-  }
-
-  .price{
-    font-size: 5px;
-  }
-
-  /* BOTÃO */
-  .card .btn{
-    font-size: 5px;
-    padding: 6px;
-    width: 100%;
-    border-radius: 8px;
-  }
-
-}
-
-
-
-
-@media (max-width: 600px){
-
-  /* CARRINHO SOMENTE ÍCONE */
-  #cartBtn{
-    width: 46px;
-    height: 46px;
-    border-radius: 50%;
-    padding: 0;
-    background: linear-gradient(45deg,var(--primary),var(--secondary));
-  }
-
-  #cartBtn img{
-    width: 20px;
-    height: 20px;
-  }
-
-  #cartBtn span:not(.cartBadge){
-    display: none; /* esconde texto */
-  }
-
-}
-
-@media (max-width: 600px){
-
-  /* TÍTULO DO CARD */
-  #home .grid .card h3{
-    font-size: 9px;
-    line-height: 1.2;
-    margin: 2px 0;
-  }
-
-  /* DESCRIÇÃO (se existir) */
-  #home .grid .card p{
-    font-size: 8px;
-    line-height: 1.3;
-    margin: 1px 0;
-  }
-
-  /* PREÇO */
-  #home .grid .card .price{
-    font-size: 8px;
-    font-weight: 700;
-  }
-
-}
-
-@media (max-width: 600px){
-
-  /* BOTÃO VER PRODUTO */
-  #home .grid .card .btn{
-    font-size: 9px;
-    padding: 6px 8px;
-    border-radius: 10px;
-    margin-top: 4px;
-  }
-
-}
-
-#cartBtn:active{
-  transform: scale(0.9);
-}
-
-
-
-@media (max-width: 600px){
-  header img{
-    width: 90px;   /* diminui a logo */
-    height: auto;
   }
 }
 
-@media (max-width: 600px){
+.card {
+  will-change: transform;
+}
 
-  /* Container dos cards (se existir) */
-  .cards,
-  .cardsContainer,
-  .produtos{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 por linha */
-    gap: 10px;
-    padding: 8px;
+.card:hover {
+  transform: translateY(-4px);
+}
+
+
+/* ===== HEADER PC ===== */
+@media (min-width: 1024px) {
+
+  header {
+    padding: 28px 60px;
   }
 
-  /* Cards */
-  .card,
-  .productCard,
-  .planoCard{
-    width: 100%;
-    height: 100%;          /* 🔑 ALTURA FIXA */
-    padding: 10px;
+  header img {
+    height: 56px;
+  }
+
+
+}
+
+/* ===== BANNER ===== */
+.banner {
+  width: 90%;
+  max-height: 400px;
+  overflow: hidden;
+  border-radius: 18px;
+  margin: 0 auto 30px;
+}
+
+.banner img {
+  width: 80%;
+  height: 400px;
+  object-fit: cover;
+}
+
+/* ==== baneer mobile ==== */
+@media (max-width: 768px) {
+  .banner {
+    max-height: 220px;
     border-radius: 14px;
+  }
+}
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; /* centraliza conteúdo */
 
-    text-align: center;
+/* ===== FOOTER ===== */
+.footer {
+  background: #0b0b0b;
+  margin-top: 60px;
+  padding: 40px 20px 20px;
+  color: #ccc;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer-col h3 {
+  color: #00e5ff;
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+.footer-col p,
+.footer-col a {
+  font-size: 14px;
+  color: #ccc;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.footer-col a:hover {
+  color: #00e5ff;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 14px;
+  border-top: 1px solid #222;
+  font-size: 13px;
+  color: #777;
+}
+
+/* ==== footer mobile ==== */
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 30px 16px;
   }
 
-  /* Ícones / imagens */
-  .card img,
-  .planoCard img{
-    width: 90%;
-    height: 5%;
-    margin-bottom: 6px;
+  .footer-col h3 {
+    font-size: 15px;
   }
+}
 
-  /* Textos */
-  .card h2,
-  .card h3{
-    font-size: 14px;
-    margin: 4px 0;
+
+/* Botões do menu com tamanho igual */
+
+
+@media (min-width: 1024px) {
+  .navBtn {
+    min-width: 140px;
   }
+}
 
-  .card p{
+@media (max-width: 768px) {
+  .navBtn {
+    min-width: 90px;
     font-size: 12px;
-    line-height: 1.2;
   }
+}
 
-  /* Botões dentro do card */
-  .card .btn,
-  .planoCard .btn{
-    margin-top: auto;
-    font-size: 12px;
-    padding: 6px 10px;
-    border-radius: 10px;
-  }
-
+.navBtn {
+  height: 40px;
 }
 
 
-@media (max-width: 600px){
-
-  /* ===== HEADER ===== */
-  header{
-    padding: 10px 12px;
-    gap: 8px;
-  }
-
-  /* LOGO */
-  header img{
-    width: 80px;
-  }
-
-  /* ===== MENU ===== */
-  .mainNav{
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr 44px; /* carrinho menor */
-    gap: 8px;
-  }
-
-  /* BOTÕES */
-  .navBtn{
-    height: 38px;
-    font-size: 5px;      /* 🔑 texto menor */
-    font-weight: 600;
-    border-radius: 10px;
-    padding: 0;
-  }
-
-  /* AGS IPTV destaque */
-  .navBtn.active{
-    box-shadow: 0 0 10px rgba(0,229,255,.8);
-    transform: scale(1.03);
-  }
-
-  /* ===== CARRINHO ===== */
-  #cartBtn{
-    width: 44px;
-    height: 44px;
-    border-radius: 40%;
-  }
-
-  #cartBtn img{
-    width: 20px;
-    height: 20px;
-  }
-
+/* Tela ver produto */
+.product-view {
+  position: fixed;
+  inset: 0;
+  background: #0f0f0f;
+  z-index: 999;
+  overflow-y: auto;
+  padding: 16px;
 }
 
+.product-view-content {
+  max-width: 1100px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
 
-@media (max-width: 600px){
+/* Imagem */
+.product-image img {
+  width: 100%;
+  border-radius: 16px;
+  background: #1c1c1c;
+}
 
-  /* ===== BANNERS LOJA E IPTV ===== */
-  #storeBanners .card img,
-  #iptvBanners .card img{
-    width: 350%;
-    height: 140px;        /* ideal p/ 1920x720 */
-    object-fit: cover;
-    border-radius: 1px;
+/* Info */
+.product-info h1 {
+  font-size: 26px;
+  margin-bottom: 12px;
+}
+
+.description {
+  color: #bdbdbd;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.price-box {
+  margin-bottom: 20px;
+}
+
+.price {
+  font-size: 28px;
+  font-weight: bold;
+  color: #00ff88;
+}
+
+/* Botão comprar */
+.buyBtn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg,#00ff88,#00cc6a);
+  border: none;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Voltar */
+.backBtn {
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 14px;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .product-view-content {
+    grid-template-columns: 1fr;
   }
 
-  #storeBanners .card,
-  #iptvBanners .card{
-    padding: 0;
-    border-radius: 1px;
+  .product-info h1 {
+    font-size: 22px;
   }
 
-}
-
-
-#storeBanners img,
-#iptvBanners img{
-  box-shadow: 0 5px 10px rgba(0,0,0,.5);
-}
-
-
-
-
-/* ===== MENU PADRÃO (DESKTOP + MOBILE) ===== */
-.mainNav{
-  display:flex;
-  gap:10px;
-}
-
-/* BOTÕES IGUAIS */
-.navBtn{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  min-width:130px;
-  height:42px;
-  padding:0 14px;
-  border-radius:12px;
-  background:linear-gradient(45deg,var(--primary),var(--secondary));
-  color:#000;
-  font-weight:700;
-  text-decoration:none;
-  font-size:14px;
-  transition:.25s;
-}
-
-/* HOVER */
-.navBtn:hover{
-  transform:scale(1.05);
-}
-
-  .navBtn{
-    flex:1;
-    min-width:auto;
-    height:44px;
-    font-size:13px;
+  .price {
+    font-size: 24px;
   }
 }
 
 
-/* ===== BOTÃO ATIVO ===== */
-.navBtn{
-  position:relative;
-  overflow:visible; /* ✅ permite o badge aparecer */
+/* ===== CARRINHO FLUTUANTE (PC + MOBILE) ===== */
+.floating-cart {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  width: 58px;
+  height: 58px;
+  background: #00e5ff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2000;
+  box-shadow: 0 10px 30px rgba(0,0,0,.4);
+  transition: transform .2s ease;
+}
+
+.floating-cart:hover {
+  transform: scale(1.05);
+}
+
+.floating-cart img {
+  width: 26px;
+  height: 26px;
+}
+
+/* badge */
+.floating-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: red;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 50%;
 }
 
 
-.navBtn.active{
-  box-shadow:0 0 0 2px #fff,
-             0 0 20px rgba(0,229,255,.9);
-  transform:scale(1.06);
+/* ===== ANIMAÇÕES ===== */
+
+/* botão */
+@keyframes btnPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+.add-anim {
+  animation: btnPulse .25s ease;
+}
+
+/* carrinho */
+@keyframes cartShake {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.1) rotate(-8deg); }
+  60% { transform: scale(1.1) rotate(8deg); }
+  100% { transform: scale(1); }
+}
+
+.cart-anim {
+  animation: cartShake .4s ease;
+}
+
+/* produto voando */
+.fly-img {
+  position: fixed;
+  width: 50px;
+  z-index: 3000;
+  pointer-events: none;
+  transition: all .6s cubic-bezier(.4,0,.2,1);
 }
 
 
+.navBtn {
+  min-width: 110px;
+  height: 40px;
+  justify-content: center;
+  background: #1c1c1c;
+  color: #fff;
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
-
-@keyframes pulseBadge{
-  0%{transform:scale(.7)}
-  50%{transform:scale(1.2)}
-  100%{transform:scale(1)}
-}
-
-#cartBtn{
-  position:relative;
-}
-
-														/* ===== BADGE DO CARRINHO ===== */
-
-.cartBadge{
-  position:absolute;
-  top:-8px;
-  right:-8px;
-
-  background:#FF0000;   /* círculo laranja */
-  color:#000;           /* 🔢 cor do número (PRETO) */
-
-  width:22px;
-  height:22px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  font-size:25px;
-  font-weight:800;
-  line-height:22px;     /* 👈 força centralização perfeita */
-
-  border-radius:50%;
-  z-index:9999;
-
-  box-shadow:0 0 0 2px #0b0b0f;
-}
-
-
-
-
-
-
-													/* ===== ANIMAÇÃO AO ADICIONAR AO CARRINHO ===== */
-
-/* PULO DO CARD */
-.card.added{
-  animation:cardJump .6s ease;
-}
-
-@keyframes cardJump{
-  0%{transform:scale(1)}
-  30%{transform:scale(1.06)}
-  60%{transform:scale(.98)}
-  100%{transform:scale(1)}
-}
-
-/* BOTÃO CONFIRMAÇÃO */
-.btn.added{
-  animation:btnConfirm .5s ease;
-}
-
-@keyframes btnConfirm{
-  0%{transform:scale(1)}
-  50%{transform:scale(1.15)}
-  100%{transform:scale(1)}
-}
-
-/* BADGE PULSE REFORÇADO */
-.cartBadge.pulse{
-  animation:pulseBadge .6s ease;
-}
-
-#storeBanners .card img{
-  height:220px;
-  border-radius:18px;
-}
-
-input.error{
-  border:2px solid #ff3d3d;
-  animation:shake .3s;
-}
-
-@keyframes shake{
-  0%{transform:translateX(0)}
-  25%{transform:translateX(-4px)}
-  50%{transform:translateX(4px)}
-  75%{transform:translateX(-4px)}
-  100%{transform:translateX(0)}
-}
-
-#cartBtn{
-  position:relative;
-}
-
 
 
   </style>
@@ -989,18 +482,15 @@ input.error{
 
   <img src="agsstore.png" alt="AGSStore">
   <nav class="mainNav">
-  <a href="#" onclick="showPage('home')" class="navBtn">
-    🏬 Loja
-  </a>
+	<a href="#" onclick="event.preventDefault(); showPage('home')" class="navBtn">
+		Loja
+	</a>
 
   <a href="#" onclick="showPage('agsiptv')" class="navBtn">
-    📺 AGS IPTV
+    AGS IPTV
   </a>
 
-<a href="#" onclick="showPage('cart')" class="navBtn" id="cartBtn">
-  🛒 Carrinho
-  <span class="cartBadge" id="cartBadge" style="display:none">0</span>
-</a>
+
 
 </nav>
 
@@ -1012,51 +502,34 @@ input.error{
 																						<!-- HOME -->
   <section id="home">
   
-		<input 
-  type="text" 
-  id="searchInput" 
-  placeholder="🔍 Buscar produto..."
-  style="
-    max-width:400px;
-    padding:12px;
-    border-radius:10px;
-    border:none;
-    margin-bottom:20px;
-    font-size:16px;
-  "
-  oninput="render()"
-/>
+		<input id="searchInput" oninput="renderDebounced()" placeholder="🔍 Buscar produto">
+
 																						<!-- BANNERS -->
-	<div class="grid" id="storeBanners"></div>
-			<div class="grid">
-				<div class="card"><img src="img1.jpg"></div>
+
+			<!-- AGS IPTV -->
+		<div class="grid" id="storeBannersIptv"></div>
+
+		<div class="banner" id="mainBanner">
+				<img src="img1.jpg" alt="Banner Loja">
 			</div>
 
-
-
-    <h2>Destaques</h2>
-    <div class="grid" id="productList"></div>
-	
-																						<!-- NOVA ÁREA: TODOS OS PRODUTOS -->
-  <h2 style="margin-top:40px">Todos os Produtos</h2>
-  <div class="grid" id="allProducts"></div>
+		<h2 style="margin-top:40px">Todos os Produtos</h2>
+		<div class="grid" id="allProducts"></div>
   </section>
+
   
 																						<!-- PRODUTO -->
-  <section id="product" class="hidden">
-		<button class="btn backBtn" onclick="showPage('home')">Voltar</button>
-    <div id="productDetail"></div>
-  </section>
+
 
 																						<!--CARRINHO-->
 <section id="cart" class="hidden">
-  <h2>Carrinho</h2>
-  <div id="cartItems"></div>
-  <p id="cartTotal" style="margin-top:15px;font-weight:bold"></p>
+	<h2>Carrinho</h2>
+		<div id="cartItems"></div>
+	<p id="cartTotal" style="margin-top:15px;font-weight:bold"></p>
 
-<button class="btn" id="btnFinalizar" onclick="checkout()">
-  Finalizar Compra
-</button>
+	<button class="btn" id="btnFinalizar" onclick="checkout()">
+		Finalizar Compra
+	</button>
 
 
 </section>
@@ -1065,120 +538,103 @@ input.error{
  <section id="agsiptv" class="hidden">  
  
  
-	<div id="iptvBanners" class="grid"></div>
-																						<!-- BANNERS AGS IPTV -->
-	<div class="grid" id="storeBanners"></div>
-
+			<div id="iptvBanners" class="grid"></div>
+			
 			<div class="grid">
 				<div class="card"><img src="iptv-banner1.jpg"></div>
 			</div>
 
 
 
-  <h2 class="sectionTitle">Planos AGS IPTV</h2>
+			<h2 class="sectionTitle">Planos AGS IPTV</h2>
 
-  <div class="iptvPlans">
+	<div class="iptvPlans">
 
-    <div class="iptvBtn" onclick="iptvPlan('R$20,00 - 1 usuário / 1 tela')">
-      <span>📺</span>
-      R$ 20,00
-      <small>1 usuário<br>1 tela simultânea</small>
-    </div>
+		<div class="iptvBtn" onclick="iptvPlan('R$20,00 - 1 usuário / 1 tela')">
+			<span>📺</span>
+				R$ 20,00
+			<small>1 usuário<br>1 tela simultânea</small>
+		</div>
 
-    <div class="iptvBtn" onclick="iptvPlan('R$30,00 - 1 usuário / 3 telas')">
-      <span>📺📺📺</span>
-      R$ 30,00
-      <small>1 usuário<br>3 telas simultâneas</small>
-    </div>
+		<div class="iptvBtn" onclick="iptvPlan('R$30,00 - 1 usuário / 3 telas')">
+			<span>📺📺📺</span>
+				R$ 30,00
+			<small>1 usuário<br>3 telas simultâneas</small>
+		</div>
 
-    <div class="iptvBtn" onclick="iptvPlan('R$35,00 - 2 usuários / 1 tela cada')">
-      <span>👥</span>
-      R$ 35,00
-      <small>2 usuários<br>1 tela cada</small>
-    </div>
+		<div class="iptvBtn" onclick="iptvPlan('R$35,00 - 2 usuários / 1 tela cada')">
+			<span>👥</span>
+				R$ 35,00
+			<small>2 usuários<br>1 tela cada</small>
+		</div>
 
-    <div class="iptvBtn" onclick="iptvPlan('R$30,00 - UNITV')">
-      <span>🔥</span>
-      R$ 30,00
-      <small>Plano UNITV</small>
-    </div>
+		<div class="iptvBtn" onclick="iptvPlan('R$30,00 - UNITV')">
+			<span>🔥</span>
+				R$ 30,00
+			<small>Plano UNITV</small>
+		</div>
 
-  </div>
+	</div>
 </section>
-   
-																						<!-- ADMIN -->
-	<section id="admin" class="hidden">
-	<div id="adminPanel">
-
-
-    <h2 class="adminTitle">🔐 Painel Administrativo</h2>
-
-    <input id="title" placeholder="Título">
-    <input id="price" placeholder="Preço">
-    <textarea id="desc" placeholder="Descrição"></textarea>
-	
-			<label>Avaliação Inicial</label>
-<select id="ratingInput">
-  <option value="1">⭐</option>
-  <option value="2">⭐⭐</option>
-  <option value="3">⭐⭐⭐</option>
-  <option value="4">⭐⭐⭐⭐</option>
-  <option value="5" selected>⭐⭐⭐⭐⭐</option>
-</select>
-	
-    <label class="fileBtn">📷 Escolher Imagens (até 3) <input type="file" id="images" accept="image/png,image/jpeg" multiple></label>
-    <label class="fileBtn">🎥 Escolher Vídeo<input type="file" id="video" accept="video/*"></label>
-    <button class="btn" onclick="addProduct()">Cadastrar Produto</button>
-	<hr style="margin:30px 0">
-
-<h3>Produtos Cadastrados</h3>
-		<div id="adminProducts" class="grid"></div>
-		<hr style="margin:40px 0">
-
-<h3>Banners AGS IPTV</h3>
-
-<label class="fileBtn">
-  🖼️ Adicionar Banner IPTV
-  <input type="file" id="iptvBannerInput" accept="image/png,image/jpeg">
-</label>
-
-<button class="btn" onclick="addIptvBanner()">Adicionar Banner</button>
-
-<div id="iptvBannerAdmin" class="grid"></div>
-
-
-</div>
-  </section>
-
-
+ 																						<!-- RODAPE--> 
 <footer class="footer">
-  <div class="footerContent">
+		<div class="footer-content">
+		<div class="footer-col">
+			<h3>Sobre</h3>
+		<p>Marketplace digital com ofertas, serviços IPTV e promoções exclusivas.</p>
+		</div>
 
-    <div class="footerBrand">
-      <img src="agsstore.png" alt="AGSStore">
-      <p>Sua loja digital de confiança</p>
-    </div>
+		<div class="footer-col">
+			<h3>Links</h3>
+				<a href="#" onclick="showPage('home')">Loja</a>
+				<a href="#" onclick="showPage('agsiptv')">AGS IPTV</a>
+			<a href="#" onclick="showPage('cart')">Carrinho</a>
+		</div>
 
-    <div class="footerLinks">
-      <h4>Contato</h4>
-      <a href="https://wa.me/5585988855751" target="_blank">📱 WhatsApp</a>
-      <a href="https://instagram.com/a.g.s_store" target="_blank">📸 Instagram</a>
-    </div>
-
-    <div class="footerLinks">
-      <h4>Atendimento</h4>
-      <span>⏰ Seg à Dom</span>
-      <span>💬 Suporte rápido</span>
-    </div>
+		<div class="footer-col">
+			<h3>Atendimento</h3>
+			<p>📲 WhatsApp</p>
+			<p>⏰ Atendimento rápido</p>
+			<p>🔒 100% Confiável</p>
+		</div>
 
   </div>
 
-  <div class="footerBottom">
-    © <span id="year"></span> AGSStore — Todos os direitos reservados
+  <div class="footer-bottom">
+    © 2025 • Desenvolvido por <strong>Glemerson</strong>
   </div>
 </footer>
 
 
+ 																						<!--ver produto--> 
+<div id="productDetail" class="product-view hidden">
+
+		<button class="backBtn" onclick="closeProduct()">← Voltar</button>
+
+	<div class="product-view-content">
+
+		<div class="product-image">
+		<img id="detailImage" src="" alt="Produto">
+    </div>
+
+		<div class="product-info">
+			<h1 id="detailTitle"></h1>
+
+			<p id="detailDescription" class="description"></p>
+
+			<div class="price-box">
+			<span id="detailPrice" class="price"></span>
+		</div>
+
+		<button class="buyBtn"
+			onclick="addToCart(currentProductId, this, document.getElementById('detailImage').src)">
+			🛒 Adicionar ao carrinho
+		</button>
+
+    </div>
+
+  </div>
+</div>
 
 
 
@@ -1186,12 +642,19 @@ input.error{
 
 <script>
 
+const allProducts = document.getElementById('allProducts');
+const cartItems = document.getElementById('cartItems');
+const cartTotal = document.getElementById('cartTotal');
+const productDetail = document.getElementById('productDetail');
+
+
+
 let etapaCheckout = 'carrinho'; 
 // carrinho | formulario | pix
 
 
 // ======= STORAGE =======
-const products = [
+const products = JSON.parse(localStorage.getItem('products')) || [
 			{id:1,title:'CASE HD',price:35,desc:'Case para HD',imgs: ['case.jpg', 'case2.jpg','case3.jpg']},
 	
 			{id:2,title:'Cartão SD 64GB',price:45,desc:'Cartão Sandisk',imgs: ['cardsd.jpg', 'cardsd2.jpg','cardsd3.jpg']},
@@ -1205,14 +668,6 @@ const products = [
 
 let cart = JSON.parse(localStorage.getItem('cart') || '[]');
 let iptvBanners = JSON.parse(localStorage.getItem('iptvBanners') || '[]');
-
-// ======= ADMIN =======
-let editingIndex = null;
-
-// ======= ELEMENTOS =======
-const adminPanel = document.getElementById('adminPanel');
-
-
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1266,7 +721,7 @@ const adminPanel = document.getElementById('adminPanel');
       products.push(productData);
     }
 
-		//localStorage.setItem('products', JSON.stringify(products));
+		localStorage.setItem('products', JSON.stringify(products));
 
     // LIMPA CAMPOS
     title.value = '';
@@ -1276,9 +731,8 @@ const adminPanel = document.getElementById('adminPanel');
     video.value = '';
 
     alert('Produto salvo com sucesso!');
-    showPage('admin');
     render();
-    renderAdmin();
+	
   };
 
   if(videoFile){
@@ -1298,45 +752,41 @@ const adminPanel = document.getElementById('adminPanel');
   }
 }
 
-
-	function showPage(id){
-  // esconde todas as sections
+																					//SHOWPAGE
+function showPage(id){
   document.querySelectorAll('section').forEach(sec=>{
     sec.classList.add('hidden');
   });
 
-  // mostra a section desejada
   const page = document.getElementById(id);
   if(page){
     page.classList.remove('hidden');
   }
 
-  // 🔻 CONTROLE DO FOOTER (opcional)
-  const footer = document.querySelector('footer');
-  if(footer){
-    footer.style.display = (id === 'cart') ? 'none' : 'block';
+  if(id === 'cart'){
+    etapaCheckout = 'carrinho';
+    render(); // 👈 ISSO FAZ OS PRODUTOS APARECEREM
   }
-
-  // 🔻 CONTROLE DO BOTÃO FINALIZAR
-  const btn = document.getElementById('btnFinalizar');
-  if(btn){
-    btn.style.display =
-      (id === 'cart' && etapaCheckout === 'carrinho' && cart.length > 0)
-        ? 'block'
-        : 'none';
-  }
-  
-  setActiveNav(id);
 }
 
 
-	function render(){
-  productList.innerHTML = '';
-  allProducts.innerHTML = '';
+	function render(){ 
+			const search = document.getElementById('searchInput').value.toLowerCase();
+			const banner = document.getElementById('mainBanner');
 
-  const search = document.getElementById('searchInput')?.value.toLowerCase() || '';
+			if (search.trim() !== '') 	{
+			banner.classList.add('hidden');
+										}
+			else	{
+			banner.classList.remove('hidden');
+					}
+  
+  // resto do seu render (produtos)
 
+	allProducts.innerHTML = '';
+	
 products
+
   .filter(p => p.title.toLowerCase().includes(search))
   .forEach((p, index)=>{
 
@@ -1346,13 +796,15 @@ products
         <h3>${p.title}</h3>
         <p class="price">R$ ${p.price}</p>
         <button class="btn" onclick="openProduct(${p.id})">Ver Produto</button>
+
+		<button class="btn"
+			style="margin-top:6px;background:#00ff88"
+				onclick="addToCart(${p.id}, this, '${p.imgs?.[0]}')">
+			🛒 Adicionar
+		</button>
+
       </div>`;
 
-    // Exemplo: primeiros 4 são destaques
-    if(index < 4){
-      productList.innerHTML += card;
-    }
-	
     // Todos os produtos
     allProducts.innerHTML += card;
   });
@@ -1382,49 +834,12 @@ const btn = document.getElementById('btnFinalizar');
 
 if(btn){
   btn.style.display =
-    (etapaCheckout === 'carrinho' && cart.length > 0)
-    ? 'block'
-    : 'none';
+    (cart.length > 0 && etapaCheckout === 'carrinho')
+      ? 'block'
+      : 'none';
 }
 
 
-}
-
-
-	function renderAdmin(){
-  const adminProducts = document.getElementById('adminProducts');
-  adminProducts.innerHTML = '';
-
-  if(products.length === 0){
-    adminProducts.innerHTML = '<p>Nenhum produto cadastrado.</p>';
-    return;
-  }
-
- [...products]
-  .sort((a,b)=>b.id - a.id) // mais recente primeiro
-  .forEach((p, index)=>{
-
-    adminProducts.innerHTML += `
-      <div class="card">
-        <img src="${p.imgs[0]}"
-		onmousemove="showPreview(event,'${p.imgs[0]}')"
-		onmouseleave="hidePreview()">
-
-        <h3>${p.title}</h3>
-        <p class="price">R$ ${p.price}</p>
-
-        <button class="btn" onclick="editProduct(${index})">
-          ✏️ Editar
-        </button>
-
-        <button class="btn"
-          style="background:#ff3d3d;color:#fff"
-          onclick="deleteProduct(${index})">
-          🗑️ Apagar
-        </button>
-      </div>
-    `;
-  });
 }
 
 
@@ -1432,9 +847,8 @@ if(btn){
   if(!confirm('Deseja realmente apagar este produto?')) return;
 
   products.splice(index,1);
-	//localStorage.setItem('products', JSON.stringify(products));
+	localStorage.setItem('products', JSON.stringify(products));
 
-  renderAdmin();
   render();
 }
 
@@ -1448,81 +862,25 @@ if(btn){
   ratingInput.value = p.rating;
 
   editingIndex = index;
-
-  showPage('admin');
 }
 
 
-	function openProduct(id){
-  const p = products.find(x => x.id === id);
-  if(!p) return;
+	function addToCart(id, btn, img) {
+  const product = products.find(p => p.id === id);
+  if (!product) return;
 
-  const thumbs = p.imgs.slice(0,3).map((img, i) =>
-    `<img src="${img}" onclick="trocarImagem('${img}')" class="thumb">`
-  ).join('');
-
-  productDetail.innerHTML = `
-    <div class="productView productLeft">
-
-      <!-- INFO + BOTÃO -->
-      <div class="productInfo leftInfo">
-        <h2>${p.title}</h2>
-        <p class="price">R$ ${p.price}</p>
-        <p class="desc">${p.desc}</p>
-
-        <button class="btn bigBtn" onclick="addToCart(${id})">
-          🛒 Adicionar ao Carrinho
-        </button>
-      </div>
-
-      <!-- IMAGEM -->
-      <div class="productImage">
-        <img id="mainImage" src="${p.imgs[0]}">
-
-        <div class="thumbs">
-          ${thumbs}
-        </div>
-      </div>
-
-    </div>
-  `;
-
-  showPage('product');
-}
-
-
-
-	function addToCart(id){
-  const product = products.find(p=>p.id===id);
   cart.push(product);
-  localStorage.setItem('cart',JSON.stringify(cart));
+  localStorage.setItem('cart', JSON.stringify(cart));
 
-  // ===== ANIMAÇÃO BOTÃO =====
-  const btn = document.querySelector('.bigBtn');
-  if(btn){
-    btn.classList.add('added');
-    setTimeout(()=>btn.classList.remove('added'),500);
-  }
+  updateCartBadge();
 
-  // ===== ANIMAÇÃO CARD (HOME) =====
-  document.querySelectorAll('.card').forEach(card=>{
-    if(card.innerText.includes(product.title)){
-      card.classList.add('added');
-      setTimeout(()=>card.classList.remove('added'),600);
-    }
-  });
-
-  // feedback leve (sem alert chato)
-  toast('🛒 Produto adicionado ao carrinho');
-
-
-	updateCartBadge();
-	render();
+  if (btn) animateAddToCart(btn, img);
 }
+
 
 																					//CHECKOUT
 																					
-	function checkout(){
+function checkout(){
   if(cart.length === 0){
     alert('Carrinho vazio!');
     return;
@@ -1531,10 +889,17 @@ if(btn){
   etapaCheckout = 'formulario';
   renderCarrinhoFormulario();
 }
+
 																					//FORMULARIO
 
 	function renderCarrinhoFormulario(){
-  showPage('cart');
+
+
+  document.querySelectorAll('section').forEach(sec=>{
+    sec.classList.add('hidden');
+  });
+
+  document.getElementById('cart').classList.remove('hidden');
 
   const btn = document.getElementById('btnFinalizar');
   if(btn) btn.style.display = 'none';
@@ -1618,25 +983,20 @@ if(btn){
 }
 
 
-	function removeFromCart(index){
-  cart.splice(index, 1);
-  localStorage.setItem('cart', JSON.stringify(cart));
+	function removeFromCart(index)	{
+			cart.splice(index, 1);
+			localStorage.setItem('cart', JSON.stringify(cart));
 
-  // se carrinho ficar vazio, volta etapa
-  if(cart.length === 0){
-    etapaCheckout = 'carrinho';
-  }
+																		// se carrinho ficar vazio, volta etapa
+				if(cart.length === 0)	{
+				etapaCheckout = 'carrinho';
+										}
+	
+			updateCartBadge();
+			render();
   
-updateCartBadge();
-  render();
-  
-  const badge = document.getElementById('cartBadge');
-if(badge && cart.length === 0){
-  badge.style.display = 'none';
-}
 
-
-}
+									}
 
 
 	function iptvPlan(plan){
@@ -1666,24 +1026,6 @@ if(badge && cart.length === 0){
     renderIptvBanners();
   };
   reader.readAsDataURL(file);
-	}
-
-
-	function renderIptvBannersAdmin(){
-  const area = document.getElementById('iptvBannerAdmin');
-  area.innerHTML = '';
-
-  iptvBanners.forEach((b,index)=>{
-    area.innerHTML += `
-      <div class="card">
-        <img src="${b}">
-        <button class="btn" style="background:#ff3d3d;color:#fff"
-          onclick="removeIptvBanner(${index})">
-          🗑️ Remover
-        </button>
-      </div>
-    `;
-  });
 	}
 
 
@@ -1753,7 +1095,10 @@ if(badge && cart.length === 0){
   const bairro = document.getElementById('bairro').value.trim();
 
 
-  if(!nome || !contato || !cep || !rua || !numero || !bairro){
+const contato = contatoInput.value;
+const cep = cepInput.value;
+if(!nome || !contatoInput.value || !cepInput.value || !rua || !numero || !bairro){
+
     toast('⚠️ Preencha todos os campos corretamente');
     return;
 	
@@ -1850,22 +1195,6 @@ if(badge && cart.length === 0){
 }
 
 
-	function updateCartBadge(){
-  const badge = document.getElementById('cartBadge');
-  if(!badge) return;
-
-  const count = cart.length;
-
-  badge.innerText = count;
-
-  if(count > 0){
-    badge.style.display = 'block';
-  }else{
-    badge.style.display = 'none';
-  }
-}
-
-
 	function validarWhatsapp(){
   const input = document.getElementById('contato');
   if(!input) return false;
@@ -1915,7 +1244,7 @@ if(badge && cart.length === 0){
 }
 
 
-function aplicarMascaras(){
+	function aplicarMascaras(){
 
   const cep = document.getElementById('cep');
   const contato = document.getElementById('contato');
@@ -1949,8 +1278,93 @@ function aplicarMascaras(){
   }
 }
 
+				let renderTimeout;
+
+	function renderDebounced() {
+  clearTimeout(renderTimeout);
+  renderTimeout = setTimeout(render, 300);
+}
 
 
+
+	if(document.getElementById('iptvBannerAdmin')){
+  renderIptvBannersAdmin();
+}
+
+
+				let currentProductId = null;
+
+	function openProduct(id) {
+		const product = products.find(p => p.id === id);
+		if (!product) return;
+
+		currentProductId = id;
+
+		document.getElementById('detailImage').src = product.imgs?.[0] || '';
+		document.getElementById('detailTitle').innerText = product.title;
+		document.getElementById('detailDescription').innerHTML = product.desc;
+		document.getElementById('detailPrice').innerText =
+			'R$ ' + product.price.toFixed(2);
+
+		document.getElementById('productDetail').classList.remove('hidden');
+		document.body.style.overflow = 'hidden';
+
+	}
+
+
+	function closeProduct() {
+			document.getElementById('productDetail').classList.add('hidden');
+			document.body.style.overflow = 'auto';
+	}
+
+
+	function updateCartBadge() {
+  const count = cart.length;
+
+  document.querySelectorAll('.floating-badge, .cartBadge').forEach(b=>{
+    b.innerText = count;
+    b.style.display = count ? 'inline-block' : 'none';
+  });
+}
+
+
+
+	function animateAddToCart(btn, imgSrc) {
+  // anima botão
+  btn.classList.add('add-anim');
+  setTimeout(() => btn.classList.remove('add-anim'), 250);
+
+  // anima carrinho
+  const cart = document.getElementById('floatingCart');
+  if (cart) {
+    cart.classList.add('cart-anim');
+    setTimeout(() => cart.classList.remove('cart-anim'), 400);
+  }
+
+  // produto voando
+	if (imgSrc && cart && btn) {
+    const img = document.createElement('img');
+    img.src = imgSrc;
+    img.className = 'fly-img';
+
+    const rectBtn = btn.getBoundingClientRect();
+    const rectCart = cart.getBoundingClientRect();
+
+    img.style.left = rectBtn.left + 'px';
+    img.style.top = rectBtn.top + 'px';
+
+    document.body.appendChild(img);
+
+    setTimeout(() => {
+      img.style.left = rectCart.left + 'px';
+      img.style.top = rectCart.top + 'px';
+      img.style.opacity = '0';
+      img.style.transform = 'scale(.3)';
+    }, 10);
+
+    setTimeout(() => img.remove(), 700);
+  }
+}
 
 
 
@@ -1976,10 +1390,7 @@ function aplicarMascaras(){
 				cartTotal.innerHTML = '';
 				render();
 				renderIptvBanners();
-				renderIptvBannersAdmin();
-				updateCartBadge();
-
-				
+			
 
 </script>
 	
@@ -2015,9 +1426,13 @@ function aplicarMascaras(){
 			z-index:9999;
 		"></div>
 
-</script>
 
-
+							
+														<!-- Carrinho flutuante (PC + Mobile) -->
+							<div id="floatingCart" class="floating-cart" onclick="showPage('cart')">
+									<img src="carri.png" alt="Carrinho">
+									<span id="floatingCartBadge" class="floating-badge">0</span>
+							</div>
 
 
 
