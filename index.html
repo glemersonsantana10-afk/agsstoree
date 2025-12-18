@@ -197,15 +197,15 @@ header img {
 /* ===== BANNER ===== */
 .banner {
   width: 90%;
-  max-height: 90%px;
+  max-height: 400px;
   overflow: hidden;
   border-radius: 18px;
   margin: 0 auto 30px;
 }
 
 .banner img {
-  width: 100%;
-  height: 100%px;
+  width: 80%;
+  height: 400px;
   object-fit: cover;
 }
 
@@ -473,64 +473,6 @@ header img {
 }
 
 
-/* ===== AGS IPTV ===== */
-.iptvPlans {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
-  margin-top: 20px;
-}
-
-.iptvBtn {
-  background: #1a1a1a;
-  border-radius: 14px;
-  padding: 16px;
-  cursor: pointer;
-  text-align: center;
-  transition: transform 0.2s, background 0.2s;
-  border: 2px solid transparent;
-}
-
-.iptvBtn:hover {
-  transform: translateY(-4px);
-  border-color: #00e5ff;
-  background: #222;
-}
-
-.iptvBtn span {
-  display: block;
-  font-size: 32px;
-  margin-bottom: 8px;
-}
-
-.iptvBtn small {
-  display: block;
-  color: #ccc;
-  font-size: 13px;
-  margin-top: 4px;
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-  .iptvPlans {
-    grid-template-columns: 1fr; /* 1 coluna no celular */
-    gap: 12px;
-  }
-
-  .iptvBtn {
-    padding: 14px;
-  }
-
-  .iptvBtn span {
-    font-size: 28px;
-  }
-
-  .iptvBtn small {
-    font-size: 12px;
-  }
-}
-
-
   </style>
 </head>
 <body>
@@ -593,36 +535,47 @@ header img {
 </section>
 
 																						<!-- AGS IPTV -->
-<section id="agsiptv" class="hidden">  
-  <h2 class="sectionTitle">Planos AGS IPTV</h2>
+ <section id="agsiptv" class="hidden">  
+ 
+ 
+			<div id="iptvBanners" class="grid"></div>
+			
+			<div class="grid">
+				<div class="card"><img src="iptv-banner1.jpg"></div>
+			</div>
 
-  <div class="iptvPlans">
-    <div class="iptvBtn" onclick="abrirWhatsApp('R$20,00 - 1 usuário / 1 tela')">
-      <span>📺</span>
-      R$ 20,00
-      <small>1 usuário<br>1 tela simultânea</small>
-    </div>
 
-    <div class="iptvBtn" onclick="abrirWhatsApp('R$30,00 - 1 usuário / 3 telas')">
-      <span>📺📺📺</span>
-      R$ 30,00
-      <small>1 usuário<br>3 telas simultâneas</small>
-    </div>
 
-    <div class="iptvBtn" onclick="abrirWhatsApp('R$35,00 - 2 usuários / 1 tela cada')">
-      <span>👥</span>
-      R$ 35,00
-      <small>2 usuários<br>1 tela cada</small>
-    </div>
+			<h2 class="sectionTitle">Planos AGS IPTV</h2>
 
-    <div class="iptvBtn" onclick="abrirWhatsApp('R$30,00 - UNITV')">
-      <span>🔥</span>
-      R$ 30,00
-      <small>Plano UNITV</small>
-    </div>
-  </div>
+	<div class="iptvPlans">
+
+		<div class="iptvBtn" onclick="iptvPlan('R$20,00 - 1 usuário / 1 tela')">
+			<span>📺</span>
+				R$ 20,00
+			<small>1 usuário<br>1 tela simultânea</small>
+		</div>
+
+		<div class="iptvBtn" onclick="iptvPlan('R$30,00 - 1 usuário / 3 telas')">
+			<span>📺📺📺</span>
+				R$ 30,00
+			<small>1 usuário<br>3 telas simultâneas</small>
+		</div>
+
+		<div class="iptvBtn" onclick="iptvPlan('R$35,00 - 2 usuários / 1 tela cada')">
+			<span>👥</span>
+				R$ 35,00
+			<small>2 usuários<br>1 tela cada</small>
+		</div>
+
+		<div class="iptvBtn" onclick="iptvPlan('R$30,00 - UNITV')">
+			<span>🔥</span>
+				R$ 30,00
+			<small>Plano UNITV</small>
+		</div>
+
+	</div>
 </section>
-
  																						<!-- RODAPE--> 
 <footer class="footer">
 		<div class="footer-content">
@@ -800,20 +753,25 @@ let iptvBanners = JSON.parse(localStorage.getItem('iptvBanners') || '[]');
 }
 
 																					//SHOWPAGE
-function showPage(id){
+	function showPage(id){
+  // esconde todas as sections
   document.querySelectorAll('section').forEach(sec=>{
     sec.classList.add('hidden');
   });
 
+  // mostra a section desejada
   const page = document.getElementById(id);
   if(page){
     page.classList.remove('hidden');
   }
 
-  if(id === 'cart'){
-    etapaCheckout = 'carrinho';
-    render(); // 👈 ISSO FAZ OS PRODUTOS APARECEREM
+  // 🔻 CONTROLE DO FOOTER (opcional)
+  const footer = document.querySelector('footer');
+  if(footer){
+    footer.style.display = (id === 'cart') ? 'none' : 'block';
   }
+  
+  setActiveNav(id);
 }
 
 
@@ -939,14 +897,14 @@ function checkout(){
 
 																					//FORMULARIO
 
-	function renderCarrinhoFormulario(){
-
+function renderCarrinhoFormulario(){
 
   document.querySelectorAll('section').forEach(sec=>{
     sec.classList.add('hidden');
   });
 
   document.getElementById('cart').classList.remove('hidden');
+
 
   const btn = document.getElementById('btnFinalizar');
   if(btn) btn.style.display = 'none';
@@ -1411,12 +1369,6 @@ if(!nome || !contatoInput.value || !cepInput.value || !rua || !numero || !bairro
 
     setTimeout(() => img.remove(), 700);
   }
-}
-
-
-function abrirWhatsApp(plano) {
-  const msg = encodeURIComponent(`Olá! Tenho interesse no plano IPTV:\n\n${plano}`);
-  window.open(`https://wa.me/5585988855751?text=${msg}`, '_blank');
 }
 
 
